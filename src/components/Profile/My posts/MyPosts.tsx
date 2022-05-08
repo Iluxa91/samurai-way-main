@@ -3,22 +3,17 @@ import Post from "./Post/Post";
 import React, {ChangeEvent, LegacyRef, MouseEventHandler} from "react";
 import {
     ActionsType,
-    addPostActionCreator,
     PostsPropsType,
-    updateNewPostTextActionCreator,
 } from "../../../Redux/state";
-
-
+import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../Redux/profile-reducer";
 
 type PropsType = {
     posts: PostsPropsType[],
     // addPost: ()=> void
     // updateNewPostText: (newText:string)=>void
     messageForNewPost: string
-    dispatch: (action:ActionsType)=>void
+    dispatch: (action: ActionsType) => void
 }
-
-
 
 export const MyPosts = (props: PropsType) => {
 
@@ -28,7 +23,6 @@ export const MyPosts = (props: PropsType) => {
     //     {id: 2, message: "Blalbvla", likesCount: 12}
     // ]
     let postsElement = props.posts.map(el => <Post likesCount={el.likesCount} message={el.message}/>)
-
 
     // let addPost = () => {props.addPost(props.posts)}
     // const onChangeHandler = (e:ChangeEvent<HTMLTextAreaElement>) => {props.addPost(e.currentTarget.value)}

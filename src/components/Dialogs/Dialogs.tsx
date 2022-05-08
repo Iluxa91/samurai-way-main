@@ -4,11 +4,10 @@ import {Message} from './Message/Message';
 import React from "react";
 import {
     ActionsType,
-    addMessageActionCreator,
     DialogsPropsType,
     store,
-    updateMessageTextActionCreator
 } from "../../Redux/state";
+import {addMessageActionCreator, updateMessageTextActionCreator} from "../../Redux/dialogs-reducer";
 
 type PropsType = {
     dialogsPage: DialogsPropsType
@@ -16,7 +15,6 @@ type PropsType = {
     // updateMessageText: (newMessage:string)=>void
     dispatch: (action: ActionsType) => void
 }
-
 
 export const Dialogs = (props: PropsType) => {
 
