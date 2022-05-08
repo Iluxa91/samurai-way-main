@@ -14,7 +14,7 @@ type PropsType = {
     dialogsPage: DialogsPropsType
     // addMessage: ()=>void
     // updateMessageText: (newMessage:string)=>void
-    dispatch:(action:ActionsType)=>void
+    dispatch: (action: ActionsType) => void
 }
 
 
@@ -32,20 +32,24 @@ export const Dialogs = (props: PropsType) => {
         // props.updateMessageText(newMessage)
         props.dispatch(updateMessageTextActionCreator(newMessage))
     }
-        return (
-            <div className={d.dialogs}>
-                <div className={d.dialogsItems}>
-                    {dialogElement}
-                </div>
-                <div className={d.messages}>
-                    {messageElement}
+    return (
+        <div className={d.dialogs}>
+            <div className={d.dialogsItems}>
+                {dialogElement}
+            </div>
+            <div className={d.messages}>
+                <div>{messageElement}</div>
+                <div>
+                    <div><textarea ref={newMessageElement}
+                                   onChange={onMessageChange}
+                                   value={props.dialogsPage.messageForDialog}
+                    />
+                    </div>
                     <div>
-                        <textarea ref={newMessageElement}
-                                  onChange={onMessageChange}
-                                  value={props.dialogsPage.messageForDialog}
-                        />
-                        <button onClick={addMessage} >Add Message</button>
+                        <button onClick={addMessage}>Add Message</button>
                     </div>
                 </div>
             </div>
-        )}
+        </div>
+    )
+}

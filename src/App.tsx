@@ -17,7 +17,6 @@ export type AppPropsType = {
     // updateNewPostText: (newText: string) => void
     // addMessage: () => void
     // updateMessageText: (newMessage: string) => void
-
 }
 
 function App(props: AppPropsType) {

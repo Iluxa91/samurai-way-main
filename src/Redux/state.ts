@@ -19,7 +19,7 @@ export let store: StoreType = {
                 {id: 2, message: "It's my first post", likesCount: 12},
                 {id: 3, message: "I am glad to see you", likesCount: 12}
             ],
-            messageForNewPost: 'Hello',
+            messageForNewPost: '',
         },
         dialogsPage: {
             dialogsData: [
@@ -34,7 +34,7 @@ export let store: StoreType = {
                 {id: 2, message: "How are you"},
                 {id: 3, message: "What are you doing"},
             ],
-            messageForDialog: "Yoyoy",
+            messageForDialog: "",
         }
 
     },
@@ -53,7 +53,7 @@ export let store: StoreType = {
                 likesCount: 0
             }
             this._state.profilePage.posts.unshift(newPost)
-            // this.updateNewPostText("")
+            this._state.profilePage.messageForNewPost=''
             this._callSubscriber()
         } else if (action.type==='UPDATE-NEW-POST-TEXT'){
             this._state.profilePage.messageForNewPost = action.newText
@@ -64,7 +64,7 @@ export let store: StoreType = {
                 message: this._state.dialogsPage.messageForDialog,
             }
             this._state.dialogsPage.messageData.push(newMessage)
-            // this.updateMessageText("")
+            this._state.dialogsPage.messageForDialog=''
             this._callSubscriber()
         } else if (action.type === 'UPDATE-MESSAGE-TEXT') {
             this._state.dialogsPage.messageForDialog = action.newMessage
