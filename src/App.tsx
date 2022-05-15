@@ -8,7 +8,7 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {store, StoreType} from "./Redux/state";
+import {ActionsType, StateType, store} from "./Redux/state";
 
 
 export type AppPropsType = {
@@ -17,6 +17,11 @@ export type AppPropsType = {
     // updateNewPostText: (newText: string) => void
     // addMessage: () => void
     // updateMessageText: (newMessage: string) => void
+}
+type StoreType = {
+    getState: () => StateType
+    subscribe: (callback: () => void) => void
+    dispatch: (action: ActionsType) => void
 }
 
 function App(props: AppPropsType) {

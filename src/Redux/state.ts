@@ -3,12 +3,16 @@ import {AddMessageActionType, dialogsReducer, UpdateMessageTextActionType} from 
 
 export type StoreType = {
     _state: StateType
-    _callSubscriber: ()=>void
-    getState: ()=>StateType
-    subscribe: (callback: ()=> void)=>void
-    dispatch:(action:ActionsType)=>void
+    _callSubscriber: () => void
+    getState: () => StateType
+    subscribe: (callback: () => void) => void
+    dispatch: (action: ActionsType) => void
 }
-export type ActionsType = AddPostActionType|UpdateNewPostTextActionType|AddMessageActionType|UpdateMessageTextActionType
+export type ActionsType =
+    AddPostActionType
+    | UpdateNewPostTextActionType
+    | AddMessageActionType
+    | UpdateMessageTextActionType
 
 export let store: StoreType = {
     _state: {
@@ -35,16 +39,17 @@ export let store: StoreType = {
             ],
             messageForDialog: "",
         }
-
     },
     _callSubscriber() {
         console.log('State changed')
     },
-    getState() {return this._state},
+    getState() {
+        return this._state
+    },
     subscribe(callback) {
         this._callSubscriber = callback
     },
-    dispatch(action){
+    dispatch(action) {
         this._state.profilePage = profileReducer(this._state.profilePage, action);
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
         this._callSubscriber()
