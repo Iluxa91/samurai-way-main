@@ -10,7 +10,6 @@ let initialState = {
         messageForNewPost: '',
     }
 
-
 export const profileReducer = (state:InitialStateType=initialState, action: ActionsType) => {
     switch (action.type) {
         case 'ADD-POST':
