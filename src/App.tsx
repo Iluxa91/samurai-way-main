@@ -20,8 +20,8 @@ export type AppPropsType = {
     // updateMessageText: (newMessage: string) => void
 }
 
-function App(props: AppPropsType) {
-    const state = props.store.getState()
+function App() {
+    // const state = props.store.getState()
     return (
         <BrowserRouter>
             <div className="app-wrapper">
@@ -38,13 +38,13 @@ function App(props: AppPropsType) {
                            render={() => <DialogsContainer
                                // dialogsPage={state.dialogsPage}
                                // dispatch={props.store.dispatch.bind(props.store)}
-                               store={props.store}
+                               // store={props.store}
                            />}/>
                     <Route path='/profile'
                            render={() => <Profile
                                // profilePage={state.profilePage}
                                // dispatch={props.store.dispatch.bind(props.store)}
-                               store={props.store}
+                               // store={props.store}
                            />}/>
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/music' render={() => <Music/>}/>

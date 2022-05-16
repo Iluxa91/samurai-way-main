@@ -8,12 +8,14 @@ import {AppPropsType} from "../../App";
 //     // updateNewPostText: (newText:string)=>void
 //     dispatch: (action: ActionsType) => void
 // }
-const Profile = (props: AppPropsType) => {
+const Profile = () => {
 
     return (
         <div>
             <ProfileInfo/>
-            <MyPostsContainer store={props.store}/>
+            <MyPostsContainer
+                // store={props.store}
+            />
         </div>)
 }
 export default Profile;
