@@ -5,23 +5,17 @@ import {
     ActionsType,
     PostsPropsType,
 } from "../../../Redux/state";
-import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../Redux/profile-reducer";
 
 type PropsType = {
     posts: PostsPropsType[],
-    // addPost: ()=> void
-    // updateNewPostText: (newText:string)=>void
+    updateNewPostText: (newText:string)=>void
     messageForNewPost: string
-    dispatch: (action: ActionsType) => void
+    addPost: ()=>void
+    // dispatch: (action: ActionsType) => void
 }
 
 export const MyPosts = (props: PropsType) => {
 
-    // let postData = [
-    //     {id: 1, message: "How are you", likesCount: 12},
-    //     {id: 2, message: "It's my first post", likesCount: 12},
-    //     {id: 2, message: "Blalbvla", likesCount: 12}
-    // ]
     let postsElement = props.posts.map(el => <Post likesCount={el.likesCount} message={el.message}/>)
 
     // let addPost = () => {props.addPost(props.posts)}
@@ -30,13 +24,13 @@ export const MyPosts = (props: PropsType) => {
     let newPostElement = React.createRef<HTMLTextAreaElement>()
 
     let addPost = () => {
-        // props.addPost()
-        props.dispatch(addPostActionCreator())
+        props.addPost()
+        // props.dispatch(addPostActionCreator())
     }
     const onPostChange = () => {
         let newText = newPostElement.current!.value
-        // props.updateNewPostText(newText)
-        props.dispatch(updateNewPostTextActionCreator(newText))
+        props.updateNewPostText(newText)
+        // props.dispatch(updateNewPostTextActionCreator(newText))
     }
 
     return <div className={s.postsBlock}>

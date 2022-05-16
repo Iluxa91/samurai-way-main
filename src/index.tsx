@@ -5,7 +5,6 @@ import './index.css';
 import {BrowserRouter} from "react-router-dom";
 import App from './App';
 import {AppReduxStoreType, store} from "./Redux/store-redux";
-import {StateType} from "./Redux/state";
 import {Store} from "redux";
 
 
