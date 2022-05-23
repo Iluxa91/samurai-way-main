@@ -2,16 +2,17 @@ import d from './Dialogs.module.css'
 import {DialogsItems} from "./DialogItem/DialogItem";
 import {Message} from './Message/Message';
 import React from "react";
-import {DialogsPropsType} from "../../Redux/state";
+import {DialogsConatainerPropsType} from "./DialogsContainer";
 
-type PropsType = {
-    dialogsPage: DialogsPropsType
-    addMessage: ()=>void
-    updateMessageText: (newMessage:string)=>void
-    // dispatch: (action: ActionsType) => void
-}
 
-export const Dialogs = (props: PropsType) => {
+// type PropsType = {
+//     dialogsPage: DialogsPropsType
+//     addMessage: ()=>void
+//     updateMessageText: (newMessage:string)=>void
+//     // dispatch: (action: ActionsType) => void
+// }
+
+export const Dialogs = (props: DialogsConatainerPropsType) => {
 
     let messageElement = props.dialogsPage.messageData.map(m => <Message message={m.message}/>)
     let dialogElement = props.dialogsPage.dialogsData.map(d => <DialogsItems name={d.name} id={d.id}/>)

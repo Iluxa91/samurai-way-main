@@ -1,4 +1,4 @@
-import {ActionsType, DialogsPropsType, NewMessageType, PostsPropsType} from "./state";
+import {ActionsType} from "./state";
 
 let initialState = {
     dialogsData: [
@@ -15,8 +15,13 @@ let initialState = {
     ],
     messageForDialog: "",
 }
-type initialStateType = typeof initialState
-export const dialogsReducer = (state:initialStateType=initialState,action:ActionsType) => {
+type NewMessageType = {
+    id: number
+    message: string
+}
+export type initialStateType = typeof initialState
+
+export const dialogsReducer = (state:initialStateType=initialState,action:ActionsType):initialStateType => {
     switch (action.type) {
         case 'ADD-MESSAGE':
             const newMessage: NewMessageType = {
@@ -39,4 +44,3 @@ export const updateMessageTextActionCreator = (newMessage:string) => ({
 
 export type AddMessageActionType = ReturnType<typeof addMessageActionCreator>
 export type UpdateMessageTextActionType = ReturnType<typeof updateMessageTextActionCreator>
-

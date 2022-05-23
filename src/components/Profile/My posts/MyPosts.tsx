@@ -1,20 +1,18 @@
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
 import React, {ChangeEvent, LegacyRef, MouseEventHandler} from "react";
-import {
-    ActionsType,
-    PostsPropsType,
-} from "../../../Redux/state";
+import {MyPostPropsType} from "./MyPostsContainer";
 
-type PropsType = {
-    posts: PostsPropsType[],
-    updateNewPostText: (newText:string)=>void
-    messageForNewPost: string
-    addPost: ()=>void
-    // dispatch: (action: ActionsType) => void
-}
+// type PropsType = {
+//     posts: PostsPropsType[],
+//     updateNewPostText: (newText:string)=>void
+//     messageForNewPost: string
+//     addPost: ()=>void
+//     // dispatch: (action: ActionsType) => void
+// }
 
-export const MyPosts = (props: PropsType) => {
+
+export const MyPosts = (props: MyPostPropsType) => {
 
     let postsElement = props.posts.map(el => <Post likesCount={el.likesCount} message={el.message}/>)
 
