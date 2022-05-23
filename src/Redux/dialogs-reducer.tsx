@@ -23,21 +23,11 @@ export type initialStateType = typeof initialState
 
 export const dialogsReducer = (state: initialStateType = initialState, action: ActionsType): initialStateType => {
     switch (action.type) {
-        case 'ADD-MESSAGE': {
-            const newMessage: NewMessageType = {
-                id: 4,
-                message: state.messageForDialog,
-            }
-            const stateCopy = {...state, messageData: [...state.messageData, newMessage]}
-            // state.messageData.push(newMessage)
-            stateCopy.messageForDialog = ''
-            return {...stateCopy}
-        }
-        case 'UPDATE-MESSAGE-TEXT': {
-            let stateCopy = {...state}
-            stateCopy.messageForDialog = action.newMessage
-            return stateCopy
-        }
+        case 'ADD-MESSAGE':
+            const newMessage: NewMessageType = {id: 4, message: state.messageForDialog, }
+            return {...state, messageData: [...state.messageData, newMessage], messageForDialog:''}
+        case 'UPDATE-MESSAGE-TEXT':
+            return {...state,messageForDialog:action.newMessage}
         default:
             return state
     }
