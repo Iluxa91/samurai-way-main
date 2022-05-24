@@ -10,6 +10,7 @@ import {Settings} from "./components/Settings/Settings";
 import {Store} from "redux";
 import {AppReduxStoreType} from "./Redux/store-redux";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+import {UsersContainer} from "./components/Users/usersContainer";
 
 
 export type AppPropsType = {
@@ -49,6 +50,7 @@ function App() {
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/music' render={() => <Music/>}/>
                     <Route path='/settings' render={() => <Settings/>}/>
+                    <Route path='/users' render={()=><UsersContainer/>}/>
                 </div>
 
             </div>

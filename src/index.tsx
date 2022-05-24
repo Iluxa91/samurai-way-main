@@ -4,8 +4,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import {BrowserRouter} from "react-router-dom";
 import App from './App';
-import {AppReduxStoreType, store} from "./Redux/store-redux";
-import {Store} from "redux";
+import {store} from "./Redux/store-redux";
 import {Provider} from "react-redux";
 
 

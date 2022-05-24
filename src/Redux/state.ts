@@ -1,5 +1,6 @@
 import {AddPostActionType, profileReducer, UpdateNewPostTextActionType} from "./profile-reducer";
 import {AddMessageActionType, dialogsReducer, UpdateMessageTextActionType} from "./dialogs-reducer";
+import {FollowAT, SetUsersAT, UnFollowAT} from "./users-reducer";
 
 export type StoreType = {
     _state: StateType
@@ -13,6 +14,9 @@ export type ActionsType =
     | UpdateNewPostTextActionType
     | AddMessageActionType
     | UpdateMessageTextActionType
+    | FollowAT
+    | UnFollowAT
+    | SetUsersAT
 
 export let store: StoreType = {
     _state: {
