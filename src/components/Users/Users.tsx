@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './users.module.css'
 import {UserPropsType} from "./usersContainer";
-import * as axios from 'axios'
+import axios from 'axios'
 import userPhoto from '../../assets/image/146031.png'
 
 export const Users = (props:UserPropsType) => {
