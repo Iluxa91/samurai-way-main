@@ -21,7 +21,8 @@ let initialState: initialUsersStateType = {
     ],
     pageSize: 5,
     totalUsersCount: 0,
-    currentPage: 1
+    currentPage: 1,
+    isFetching:true,
 }
 
 export type initialUsersStateType = {
@@ -29,6 +30,7 @@ export type initialUsersStateType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isFetching:boolean
 }
 export type UsersType = {
     id: number
@@ -38,7 +40,7 @@ export type UsersType = {
     status: string
     location: LocationType
 }
-type PhotosType = {
+export type PhotosType = {
     small: string
     large: string
 }
@@ -64,22 +66,26 @@ export const usersReducer = (state: initialUsersStateType = initialState, action
             return {...state, currentPage: action.currentPage}
         case 'SET_TOTAL_USER_COUNT':
             return {...state, totalUsersCount: action.totalUsersCount}
+        case 'SET_IS_FETCHING':
+            return {...state,isFetching:action.isFetching}
         default:
             return state
     }
 }
 
-export const followAC = (userID: number) => ({type: 'FOLLOW', userID}) as const
-export const unFollowAC = (userID: number) => ({type: 'UNFOLLOW', userID}) as const
+export const follow = (userID: number) => ({type: 'FOLLOW', userID}) as const
+export const unFollow = (userID: number) => ({type: 'UNFOLLOW', userID}) as const
 export const setUsers = (newUsers: UsersType[]) => ({type: 'SET_USERS', newUsers}) as const
-export const setCurrentPageAC = (currentPage: number) => ({type: 'SET_CURRENT_PAGE', currentPage} as const)
-export const setTotalUserCountAC = (totalUsersCount: number) => ({
+export const setCurrentPage = (currentPage: number) => ({type: 'SET_CURRENT_PAGE', currentPage} as const)
+export const setTotalUserCount = (totalUsersCount: number) => ({
     type: 'SET_TOTAL_USER_COUNT',
     totalUsersCount
 } as const)
+export const setIsFetching = (isFetching:boolean) => ({type:'SET_IS_FETCHING', isFetching} as const)
 
-export type FollowAT = ReturnType<typeof followAC>
-export type UnFollowAT = ReturnType<typeof unFollowAC>
+export type FollowAT = ReturnType<typeof follow>
+export type UnFollowAT = ReturnType<typeof unFollow>
 export type SetUsersAT = ReturnType<typeof setUsers>
-export type SetCurrentPageAT = ReturnType<typeof setCurrentPageAC>
-export type setTotalUserCountAT = ReturnType<typeof setTotalUserCountAC>
+export type SetCurrentPageAT = ReturnType<typeof setCurrentPage>
+export type setTotalUserCountAT = ReturnType<typeof setTotalUserCount>
+export type setIsFetchingAT = ReturnType<typeof setIsFetching>

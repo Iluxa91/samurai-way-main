@@ -1,6 +1,6 @@
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainer} from "./My posts/MyPostsContainer";
-import {AppPropsType} from "../../App";
+import {ProfileType} from "../../Redux/profile-reducer";
 
 // type PropsType = {
 //     profilePage: ProfilePagePropsType
@@ -8,11 +8,14 @@ import {AppPropsType} from "../../App";
 //     // updateNewPostText: (newText:string)=>void
 //     dispatch: (action: ActionsType) => void
 // }
-const Profile = () => {
+export type PropsType = {
+    profile: ProfileType | null
+}
+const Profile = (props: PropsType) => {
 
     return (
         <div>
-            <ProfileInfo/>
+            <ProfileInfo profile={props.profile}/>
             <MyPostsContainer
                 // store={props.store}
             />

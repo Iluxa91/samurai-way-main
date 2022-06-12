@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
-import Profile from "./components/Profile/Profile";
 import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
@@ -11,6 +10,7 @@ import {Store} from "redux";
 import {AppReduxStoreType} from "./Redux/store-redux";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {UsersContainer} from "./components/Users/usersContainer";
+import ProfileContainer from "./components/Profile/ProfileContainer";
 
 
 export type AppPropsType = {
@@ -42,7 +42,7 @@ function App() {
                                // store={props.store}
                            />}/>
                     <Route path='/profile'
-                           render={() => <Profile
+                           render={() => <ProfileContainer
                                // profilePage={state.profilePage}
                                // dispatch={props.store.dispatch.bind(props.store)}
                                // store={props.store}
