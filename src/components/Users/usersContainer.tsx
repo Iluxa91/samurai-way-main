@@ -1,6 +1,5 @@
 import {connect} from "react-redux";
 import {AppReduxStoreType} from "../../Redux/store-redux";
-import {Dispatch} from "redux";
 import {
     follow,
     setCurrentPage, setIsFetching,
@@ -53,8 +52,8 @@ class UsersConteiner extends React.Component<UserPropsType> {
                    currentPage={this.props.currentPage}
                    onPageChanged={this.onPageChanged}
                    users={this.props.users}
-                   unfollow={this.props.follow}
-                   follow={this.props.unFollow}
+                   unfollow={this.props.unFollow}
+                   follow={this.props.follow}
             />
         </>
     }

@@ -41,7 +41,7 @@ function App() {
                                // dispatch={props.store.dispatch.bind(props.store)}
                                // store={props.store}
                            />}/>
-                    <Route path='/profile'
+                    <Route path='/profile/:userId?'
                            render={() => <ProfileContainer
                                // profilePage={state.profilePage}
                                // dispatch={props.store.dispatch.bind(props.store)}

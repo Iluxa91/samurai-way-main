@@ -51,9 +51,10 @@ type LocationType = {
 export const usersReducer = (state: initialUsersStateType = initialState, action: ActionsType): initialUsersStateType => {
     switch (action.type) {
         case 'FOLLOW':
+            const us =  state.users.map(u => (u.id === action.userID) ? {...u, followed: true} : u)
             return {
                 ...state,
-                users: state.users.map(u => (u.id === action.userID) ? {...u, followed: true} : u)
+                users:us
             }
         case 'UNFOLLOW':
             return {
