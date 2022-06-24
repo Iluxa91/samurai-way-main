@@ -14,7 +14,11 @@ if (!props.profile){
             </div>
             <div className={s.descriptionBlock}>
                 <img src={props.profile.photos.large}/>
-                ava+descriptions
+                <div>{props.profile.fullName}</div>
+                <div>{props.profile.aboutMe}</div>
+                <div>{props.profile.lookingForAJobDescriptions}</div>
+
+
             </div>
         </div>)
 }
