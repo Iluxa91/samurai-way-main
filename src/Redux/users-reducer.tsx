@@ -1,6 +1,3 @@
-import {ActionsType} from "./state";
-
-
 let initialState: initialUsersStateType = {
     users: [
         // {
@@ -23,6 +20,7 @@ let initialState: initialUsersStateType = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching:true,
+    followingInProgress:[]
 }
 
 export type initialUsersStateType = {
@@ -31,6 +29,7 @@ export type initialUsersStateType = {
     totalUsersCount: number
     currentPage: number
     isFetching:boolean
+    followingInProgress:number[]
 }
 export type UsersType = {
     id: number
@@ -69,6 +68,11 @@ export const usersReducer = (state: initialUsersStateType = initialState, action
             return {...state, totalUsersCount: action.totalUsersCount}
         case 'SET_IS_FETCHING':
             return {...state,isFetching:action.isFetching}
+        case 'TOGGLE_IS_FOLLOWING_PROGRESS':
+            return {...state,
+                followingInProgress:action.isFetching
+            ? [...state.followingInProgress,action.userID]
+            : state.followingInProgress.filter(id=>id!=action.userID)}
         default:
             return state
     }
@@ -83,10 +87,16 @@ export const setTotalUserCount = (totalUsersCount: number) => ({
     totalUsersCount
 } as const)
 export const setIsFetching = (isFetching:boolean) => ({type:'SET_IS_FETCHING', isFetching} as const)
+export const toggleIsFollowingProgress = (isFetching:boolean,userID:number) => ({
+    type:'TOGGLE_IS_FOLLOWING_PROGRESS',isFetching,userID
+} as const)
 
-export type FollowAT = ReturnType<typeof follow>
-export type UnFollowAT = ReturnType<typeof unFollow>
-export type SetUsersAT = ReturnType<typeof setUsers>
-export type SetCurrentPageAT = ReturnType<typeof setCurrentPage>
-export type setTotalUserCountAT = ReturnType<typeof setTotalUserCount>
-export type setIsFetchingAT = ReturnType<typeof setIsFetching>
+type FollowAT = ReturnType<typeof follow>
+type UnFollowAT = ReturnType<typeof unFollow>
+type SetUsersAT = ReturnType<typeof setUsers>
+type SetCurrentPageAT = ReturnType<typeof setCurrentPage>
+type setTotalUserCountAT = ReturnType<typeof setTotalUserCount>
+type setIsFetchingAT = ReturnType<typeof setIsFetching>
+type ToggleIsFollowingProgressAT = ReturnType<typeof toggleIsFollowingProgress>
+
+type ActionsType = FollowAT | UnFollowAT | SetUsersAT | SetCurrentPageAT | setTotalUserCountAT | setIsFetchingAT | ToggleIsFollowingProgressAT

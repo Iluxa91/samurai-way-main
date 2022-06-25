@@ -4,51 +4,49 @@ import {
     follow,
     setCurrentPage, setIsFetching,
     setTotalUserCount,
-    setUsers,
+    setUsers, toggleIsFollowingProgress,
     unFollow,
     UsersType
 } from "../../Redux/users-reducer";
 import React from "react";
-import axios from "axios";
 import Users from "./Users";
 import {Preloader} from "../Common/Preloader/Preloader";
+import {usersAPI} from "../../api/api";
 
 
 export type UserPropsType = MapDispatchToPropsType & MapStateToPropsType
 
-type MapDispatchToPropsType =  {
+type MapDispatchToPropsType = {
     follow: (userID: number) => void
     unFollow: (userID: number) => void
     setUsers: (users: Array<UsersType>) => void
     setCurrentPage: (pageNumber: number) => void
     setTotalUserCount: (totalUsersCount: number) => void
     setIsFetching: (isFetching: boolean) => void
+    toggleIsFollowingProgress: (isFetching: boolean,id:number) => void
 }
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
 
 class UsersConteiner extends React.Component<UserPropsType> {
     componentDidMount() {
         this.props.setIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,{
-            withCredentials:true
-        })
-            .then(response => {
-            this.props.setIsFetching(false)
-            this.props.setUsers(response.data.items)
-            this.props.setTotalUserCount(response.data.totalCount)
-        })
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
+            .then(data => {
+                this.props.setIsFetching(false)
+                this.props.setUsers(data.items)
+                this.props.setTotalUserCount(data.totalCount)
+            })
     }
 
     onPageChanged = (pageNumber: number) => {
         this.props.setIsFetching(true)
         this.props.setCurrentPage(pageNumber);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,{
-            withCredentials:true
-        })
-            .then(response => {
-            this.props.setIsFetching(false)
-            this.props.setUsers(response.data.items)
-        })
+
+        usersAPI.getUsers(pageNumber, this.props.pageSize)
+            .then(data => {
+                this.props.setIsFetching(false)
+                this.props.setUsers(data.items)
+            })
     }
 
     render() {
@@ -60,6 +58,9 @@ class UsersConteiner extends React.Component<UserPropsType> {
                    users={this.props.users}
                    unfollow={this.props.unFollow}
                    follow={this.props.follow}
+                   toggleIsFollowingProgress={this.props.toggleIsFollowingProgress}
+                   followingInProgress={this.props.followingInProgress}
+
             />
         </>
     }
@@ -71,7 +72,8 @@ let mapStateToProps = (state: AppReduxStoreType) => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 
@@ -99,5 +101,5 @@ let mapStateToProps = (state: AppReduxStoreType) => {
 // }
 
 export const UsersContainer = connect(mapStateToProps,
-    {follow, unFollow, setUsers, setCurrentPage, setTotalUserCount, setIsFetching}
-    )(UsersConteiner)
+    {follow, unFollow, setUsers, setCurrentPage, setTotalUserCount, setIsFetching,toggleIsFollowingProgress}
+)(UsersConteiner)
