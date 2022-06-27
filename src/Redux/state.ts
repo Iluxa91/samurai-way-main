@@ -1,4 +1,4 @@
-import {AddPostActionType, profileReducer, setUserProfileAT, UpdateNewPostTextActionType} from "./profile-reducer";
+
 import {AddMessageActionType, dialogsReducer, UpdateMessageTextActionType} from "./dialogs-reducer";
 
 export type StoreType = {
@@ -9,11 +9,9 @@ export type StoreType = {
     dispatch: (action: ActionsType) => void
 }
 export type ActionsType =
-    AddPostActionType
-    | UpdateNewPostTextActionType
     | AddMessageActionType
     | UpdateMessageTextActionType
-    | setUserProfileAT
+
 
 // export let store: StoreType = {
 //     _state: {
