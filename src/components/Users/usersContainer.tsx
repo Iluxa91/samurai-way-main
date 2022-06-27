@@ -104,7 +104,3 @@ let mapStateToProps = (state: AppReduxStoreType) => {
 export const UsersContainer = connect(mapStateToProps,
     {follow, unFollow, setCurrentPage, toggleIsFollowingProgress,getUsers
     })(UsersConteiner)
-
-type OwnPropsType = {
-
-}
