@@ -1,5 +1,6 @@
-import {ActionsType} from "./state";
 import {PhotosType} from "./users-reducer";
+import {Dispatch} from "redux";
+import {profileAPI} from "../api/api";
 
 
 export type InitialStateType = {
@@ -59,12 +60,24 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
             return state
     }
 }
+
+export const getUserProfile = (userId:string) => {
+    return (dispatch:Dispatch<ActionsType>) => {
+        profileAPI.getUserProfile(userId)
+            .then(data => {
+                dispatch(setUserProfile(data))
+            })
+    }
+}
+
 export const addPostActionCreator = () => ({type: 'ADD-POST'} as const)
 export const updateNewPostTextActionCreator = (newText: string) => ({
     type: 'UPDATE-NEW-POST-TEXT', newText
 } as const)
-export const setUserProfile = (profile:ProfileType) => ({type: 'SET_USER_PROFILE', profile} as const)
+const setUserProfile = (profile:ProfileType) => ({type: 'SET_USER_PROFILE', profile} as const)
 
-export type AddPostActionType = ReturnType<typeof addPostActionCreator>
-export type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextActionCreator>
-export type setUserProfileAT = ReturnType<typeof setUserProfile>
+type AddPostActionType = ReturnType<typeof addPostActionCreator>
+type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextActionCreator>
+type setUserProfileAT = ReturnType<typeof setUserProfile>
+
+type ActionsType = AddPostActionType | UpdateNewPostTextActionType | setUserProfileAT

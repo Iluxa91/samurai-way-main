@@ -15,14 +15,9 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 
 export type AppPropsType = {
     store: Store<AppReduxStoreType, any>
-    // addPost: () => void
-    // updateNewPostText: (newText: string) => void
-    // addMessage: () => void
-    // updateMessageText: (newMessage: string) => void
 }
 
 function App() {
-    // const state = props.store.getState()
     return (
         <BrowserRouter>
             <div className="app-wrapper">

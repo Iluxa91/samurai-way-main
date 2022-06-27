@@ -4,7 +4,7 @@ import {
     follow, getUsers,
     setCurrentPage,
     toggleIsFollowingProgress,
-    unFollow, UsersType
+    unFollow
 } from "../../Redux/users-reducer";
 import React from "react";
 import Users from "./Users";
