@@ -7,11 +7,11 @@ import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 import {Store} from "redux";
 import {AppReduxStoreType} from "./Redux/store-redux";
-import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
-import {UsersContainer} from "./components/Users/usersContainer";
-import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import {LoginPage} from "./components/Login/Login";
+import Dialogs from "./components/Dialogs/DialogsContainer";
+import ProfileContainer from "./components/Profile/ProfileContainer";
+import UsersConteiner from "./components/Users/usersContainer";
 
 
 export type AppPropsType = {
@@ -32,7 +32,7 @@ function App() {
                     {/*<Route path='/settings' component={Settings}/>*/}
 
                     <Route path='/dialogs'
-                           render={() => <DialogsContainer
+                           render={() => <Dialogs
                                // dialogsPage={state.dialogsPage}
                                // dispatch={props.store.dispatch.bind(props.store)}
                                // store={props.store}
@@ -46,7 +46,7 @@ function App() {
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/music' render={() => <Music/>}/>
                     <Route path='/settings' render={() => <Settings/>}/>
-                    <Route path='/users' render={()=><UsersContainer />}/>
+                    <Route path='/users' render={()=><UsersConteiner />}/>
                     <Route path='/login' render={()=><LoginPage />}/>
 
                 </div>
