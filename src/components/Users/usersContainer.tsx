@@ -10,6 +10,7 @@ import React from "react";
 import Users from "./Users";
 import {Preloader} from "../Common/Preloader/Preloader";
 import {AppPropsType} from "../../App";
+import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
 
 
 export type UserPropsType = MapDispatchToPropsType & MapStateToPropsType
@@ -101,6 +102,6 @@ let mapStateToProps = (state: AppReduxStoreType) => {
 //     }
 // }
 
-export const UsersContainer = connect(mapStateToProps,
+export const UsersContainer = withAuthRedirect(connect(mapStateToProps,
     {follow, unFollow, setCurrentPage, toggleIsFollowingProgress,getUsers
-    })(UsersConteiner)
+    })(UsersConteiner))
