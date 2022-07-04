@@ -15,10 +15,13 @@ if (!props.profile){
             {/*</div>*/}
             <div className={s.descriptionBlock}>
                 <img src={props.profile.photos.large}/>
-                <ProfileStatus status={'Hello'}/>
+                <ProfileStatus
+                    status={props.status}
+                    updateStatus={props.updateStatus}
+                />
                 <div>{props.profile.fullName}</div>
-                <div>{props.profile.aboutMe}</div>
-                <div>{props.profile.lookingForAJobDescriptions}</div>
+                {/*<div>{props.profile.aboutMe}</div>*/}
+                {/*<div>{props.profile.lookingForAJobDescriptions}</div>*/}
 
 
             </div>

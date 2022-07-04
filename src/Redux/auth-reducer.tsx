@@ -10,7 +10,7 @@ let initialState: initialUsersStateType = {
 }
 
 export type initialUsersStateType = {
-    userId: string | null
+    userId: number | null
     email: string | null
     login: string | null
     isAuth: boolean
@@ -30,7 +30,7 @@ export const authReducer = (state: initialUsersStateType = initialState, action:
     }
 }
 
-const setAuthUserData = (userId: string, email: string, login: string) => ({
+const setAuthUserData = (userId: number, email: string, login: string) => ({
     type: 'SET_USER_DATA',
     data: {userId, email, login}
 }) as const

@@ -7,6 +7,7 @@ export type InitialStateType = {
     posts:Array<PostsPropsType>
     messageForNewPost:string
     profile:null|ProfileType
+    status:string
 }
 let initialState = {
     posts: [
@@ -16,6 +17,7 @@ let initialState = {
     ] as Array<PostsPropsType>,
     messageForNewPost: '',
     profile: null,
+    status:''
 }
 
 export type PostsPropsType = {
@@ -56,12 +58,14 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
             return {...state, messageForNewPost: action.newText}
         case 'SET_USER_PROFILE':
             return {...state, profile: action.profile}
+        case 'SET_STATUS':
+            return {...state,status:action.status}
         default:
             return state
     }
 }
 
-export const getUserProfile = (userId:string) => {
+export const getUserProfile = (userId:number) => {
     return (dispatch:Dispatch<ActionsType>) => {
         profileAPI.getUserProfile(userId)
             .then(data => {
@@ -70,14 +74,31 @@ export const getUserProfile = (userId:string) => {
     }
 }
 
+export const getStatus = (userId:number) => (dispatch:Dispatch<ActionsType>) => {
+        profileAPI.getUserStatus(userId)
+            .then(data=>{
+                dispatch(setStatus(data))
+            })
+}
+export const updateStatus = (status:string) => (dispatch:Dispatch<ActionsType>) => {
+    profileAPI.updateStatus(status)
+        .then(data=>{
+            if(data.resultCode===0){
+                dispatch(setStatus(status))
+            }
+        })
+}
+
 export const addPostActionCreator = () => ({type: 'ADD-POST'} as const)
 export const updateNewPostTextActionCreator = (newText: string) => ({
     type: 'UPDATE-NEW-POST-TEXT', newText
 } as const)
 const setUserProfile = (profile:ProfileType) => ({type: 'SET_USER_PROFILE', profile} as const)
+const setStatus = (status:string) => ({type: 'SET_STATUS', status} as const)
 
 type AddPostActionType = ReturnType<typeof addPostActionCreator>
 type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextActionCreator>
 type setUserProfileAT = ReturnType<typeof setUserProfile>
+type setUserStatusAT = ReturnType<typeof setStatus>
 
-type ActionsType = AddPostActionType | UpdateNewPostTextActionType | setUserProfileAT
+type ActionsType = AddPostActionType | UpdateNewPostTextActionType | setUserProfileAT | setUserStatusAT
