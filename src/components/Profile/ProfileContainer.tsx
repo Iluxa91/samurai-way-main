@@ -20,10 +20,6 @@ type MapStateToPropsType = ReturnType<typeof mapStateToProps>
 type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
 type CommonPropsType = RouteComponentProps<PathParamType> & ProfilePropsType
 
-
-
-
-
 class ProfileContainer extends React.Component <CommonPropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId
