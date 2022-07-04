@@ -43,5 +43,8 @@ export const authAPI = {
     getLogin() {
         return instance.get('auth/me')
             .then(response=>response.data)
+    },
+    signIn(email:string,password:string,rememberMe:boolean,captcha:boolean) {
+        return instance.post('auth/login',{email,password,rememberMe,captcha})
     }
 }
