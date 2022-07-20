@@ -11,7 +11,8 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 import Dialogs from "./components/Dialogs/DialogsContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import UsersConteiner from "./components/Users/usersContainer";
-import {LoginPage} from "./components/Login/Login";
+import {LoginFormik} from "./components/Login/LoginFormik";
+
 
 
 export type AppPropsType = {
@@ -47,7 +48,7 @@ function App() {
                     <Route path='/music' render={() => <Music/>}/>
                     <Route path='/settings' render={() => <Settings/>}/>
                     <Route path='/users' render={()=><UsersConteiner />}/>
-                    <Route path='/login' render={()=><LoginPage/>}/>
+                    <Route path='/login' render={()=><LoginFormik/>}/>
 
                 </div>
 
