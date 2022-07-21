@@ -12,7 +12,7 @@ let rootReducer = combineReducers({
     dialogsPage:dialogsReducer,
     usersPage:usersReducer,
     auth:authReducer,
-    form:formReducer
+    // form:formReducer
 })
 
 
