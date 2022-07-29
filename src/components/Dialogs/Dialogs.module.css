@@ -14,3 +14,7 @@ padding: 10px;
 .message {
 
 }
+.error {
+    outline: none;
+    border: 2px solid red;
+}

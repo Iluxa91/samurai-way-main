@@ -44,28 +44,24 @@ export const Dialogs = (props: DialogsConatainerPropsType) => {
         </div>
     )
 }
-// const AddMessageForm:React.FC<InjectedFormProps<FormDataType>> = (props) => {
-//
-//     return <form onSubmit={props.handleSubmit}>
-//         <div>
-//             <Field component={'textarea'} name={'newMessageBody'} placeholder={'Enter your message'}/>
-//         </div>
-//         <div>
-//             <button>Add Message</button>
-//         </div>
-//     </form>
-// }
-//
-// const AddMessageFromRedux = reduxForm<FormDataType>({form:'dialogAddMessageForm'})(AddMessageForm)
 
 type AddMessageFormikPropsType = {
     addMessage: (value:string) => void
+}
+type FormikErrorType = {
+    newMessageBody?: string
 }
 
 export const AddMessageFormik = (props:AddMessageFormikPropsType) => {
     const formik = useFormik({
         initialValues: {
             newMessageBody: '',
+        },
+        validate: values => {
+            const errors: FormikErrorType = {}
+            if (!values.newMessageBody){errors.newMessageBody='Required'}
+            else if (values.newMessageBody.length>100){errors.newMessageBody="Max length is 100 symbols"}
+            return errors
         },
         onSubmit: values => {
             props.addMessage(values.newMessageBody)
@@ -75,10 +71,11 @@ export const AddMessageFormik = (props:AddMessageFormikPropsType) => {
         <form onSubmit={formik.handleSubmit}>
             <div>
                 <textarea
-                    name={'newMessageBody'}
-                    onChange={formik.handleChange}
-                    value={formik.values.newMessageBody}
+                    className = {formik.errors.newMessageBody? d.error : ''}
+                    placeholder={'New message'}
+                    {...formik.getFieldProps('newMessageBody')}
                 />
+                {formik.touched.newMessageBody && formik.errors.newMessageBody && <div style={{color:'red'}}>{formik.errors.newMessageBody}</div>}
             </div>
             <button type="submit">Add message</button>
         </form>

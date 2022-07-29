@@ -19,24 +19,37 @@ export const MyPosts = (props: MyPostPropsType) => {
 type NewPostFormikPropsType = {
     addPost: (newPostText: string) => void
 }
+type FormikErrorType = {
+    newPostText?: string
+}
+
 export const NewPostFormik = (props: NewPostFormikPropsType) => {
     const formik = useFormik({
         initialValues: {
             newPostText: '',
         },
+        validate: values => {
+            const errors: FormikErrorType = {}
+            if (!values.newPostText){errors.newPostText='Required'}
+            else if (values.newPostText.length>10){errors.newPostText="Max length is 10 symbols"}
+            return errors
+        },
         onSubmit: values => {
+            debugger
             props.addPost(values.newPostText)
 
         },
     });
+
     return (
         <form onSubmit={formik.handleSubmit}>
             <div>
                 <textarea
-                          name="newPostText"
-                          onChange={formik.handleChange}
-                          value={formik.values.newPostText}
+                    className = {formik.errors.newPostText? s.error : ''}
+                    placeholder={'Post message'}
+                          {...formik.getFieldProps('newPostText')}
                 />
+                {formik.touched.newPostText && formik.errors.newPostText && <div style={{color:'red'}}>{formik.errors.newPostText}</div>}
             </div>
             <div>
                 <button type="submit">Add post</button>

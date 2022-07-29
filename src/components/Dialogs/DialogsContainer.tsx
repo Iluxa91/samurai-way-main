@@ -6,37 +6,6 @@ import {AppReduxStoreType} from "../../Redux/store-redux";
 import {compose, Dispatch} from "redux";
 import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
 
-// type PropsType = {
-//     state: StateType
-//     dialogsPage: DialogsPropsType
-//     // addMessage: ()=>void
-//     // updateMessageText: (newMessage:string)=>void
-//     dispatch: (action: ActionsType) => void
-// }
-// export type DialogsContainerType = {
-//     store:StoreType
-// }
-// export const DialogsContainer = () => {
-//
-//     return <StoreContext.Consumer>
-//         {store => {
-//             let state = store.getState().dialogsPage
-//             let addMessage = () => {
-//                 // props.addMessage()
-//                 store.dispatch(addMessageActionCreator())
-//             }
-//             const onMessageChange = (newMessage: string) => {
-//                 // let newMessage = newMessageElement.current!.value;
-//                 // // props.updateMessageText(newMessage)
-//                 store.dispatch(updateMessageTextActionCreator(newMessage))
-//             }
-//             return <Dialogs addMessage={addMessage}
-//                             updateMessageText={onMessageChange}
-//                             dialogsPage={state}/>
-//         }
-//     }
-//     </StoreContext.Consumer>
-// }
 type MapStateToPropsType = {
     dialogsPage:initialStateType
 }
