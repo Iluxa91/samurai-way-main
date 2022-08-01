@@ -11,8 +11,8 @@ type PathParamType = {
     userId: string
 }
 type MapDispatchToPropsType = {
-    getUserProfile: (userId:string) => void
-    getStatus: (userId:string) => void
+    getUserProfile: (userId:number | null) => void
+    getStatus: (userId:number | null) => void
     updateStatus:(status:string)=>(dispatch:Dispatch)=>void
 }
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
@@ -21,9 +21,9 @@ type CommonPropsType = RouteComponentProps<PathParamType> & ProfilePropsType
 
 class ProfileContainer extends React.Component <CommonPropsType> {
     componentDidMount() {
-        let userId = this.props.match.params.userId
+        let userId: number | null = Number(this.props.match.params.userId)
         if (!userId) {
-            userId = '24175'
+            userId = this.props.authorizedUserId
         }
         this.props.getUserProfile(userId)
         this.props.getStatus(userId)
@@ -37,7 +37,9 @@ class ProfileContainer extends React.Component <CommonPropsType> {
 }
 let mapStateToProps = (state: AppReduxStoreType) => ({
     profile: state.profilePage.profile,
-    status: state.profilePage.status
+    status: state.profilePage.status,
+    authorizedUserId: state.auth.userId,
+    isAuth: state.auth.isAuth
 })
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {getUserProfile,getStatus,updateStatus}),

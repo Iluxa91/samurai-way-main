@@ -8,6 +8,7 @@ import {AppReduxStoreType} from "../../Redux/store-redux";
 
 type PropsType = {
     onSubmit: (values:LoginValuesType) => void
+    errorMessage: string | null
 }
 type LoginValuesType = {
     email: string
@@ -72,6 +73,7 @@ export const LoginFormik = (props: PropsType) => {
                     Remember Me
                 </label>
             </div>
+            {props.errorMessage && <div className={s.error}>{props.errorMessage}</div>}
             <button type="submit">Login</button>
         </form>
     );
@@ -79,10 +81,12 @@ export const LoginFormik = (props: PropsType) => {
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
 type MapDispatchToPropsType = {
     login: (email:string, password:string, rememberMe:boolean) => void
+
 }
 const mapStateToProps = (state:AppReduxStoreType) => {
     return {
         isAuth: state.auth.isAuth,
+        authErrorMessage: state.auth.authErrorMessage
     }
 }
 type LoginPropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -95,7 +99,7 @@ const Login = (props:LoginPropsType) => {
     }
     return <div>
         <h2>Log In</h2>
-        <LoginFormik onSubmit={onSubmit}/>
+        <LoginFormik onSubmit={onSubmit} errorMessage={props.authErrorMessage}/>
     </div>
 }
 
