@@ -29,13 +29,6 @@ type MapStateToPropsType = ReturnType<typeof mapStateToProps>
 
 class UsersConteiner extends React.Component<UserPropsType> {
     componentDidMount() {
-        // this.props.setIsFetching(true)
-        // usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-        //     .then(data => {
-        //         this.props.setIsFetching(false)
-        //         this.props.setUsers(data.items)
-        //         this.props.setTotalUserCount(data.totalCount)
-        //     })
         this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
 

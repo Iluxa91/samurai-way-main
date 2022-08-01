@@ -42,7 +42,7 @@ type ContactsType = {
     mainLink: string
 }
 
-export const profileReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+export const profileReducer = (state: InitialStateType = initialState, action: ProfileActionsType): InitialStateType => {
     switch (action.type) {
         case 'ADD-POST':
             const newPost: PostsPropsType = {
@@ -61,7 +61,7 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
 }
 
 export const getUserProfile = (userId: number) => {
-    return (dispatch: Dispatch<ActionsType>) => {
+    return (dispatch: Dispatch<ProfileActionsType>) => {
         profileAPI.getUserProfile(userId)
             .then(data => {
                 dispatch(setUserProfile(data))
@@ -69,13 +69,13 @@ export const getUserProfile = (userId: number) => {
     }
 }
 
-export const getStatus = (userId: number) => (dispatch: Dispatch<ActionsType>) => {
+export const getStatus = (userId: number) => (dispatch: Dispatch<ProfileActionsType>) => {
     profileAPI.getUserStatus(userId)
         .then(data => {
             dispatch(setStatus(data))
         })
 }
-export const updateStatus = (status: string) => (dispatch: Dispatch<ActionsType>) => {
+export const updateStatus = (status: string) => (dispatch: Dispatch<ProfileActionsType>) => {
     profileAPI.updateStatus(status)
         .then(data => {
             if (data.resultCode === 0) {
@@ -92,4 +92,4 @@ type AddPostActionType = ReturnType<typeof addPostActionCreator>
 type setUserProfileAT = ReturnType<typeof setUserProfile>
 type setUserStatusAT = ReturnType<typeof setStatus>
 
-type ActionsType = AddPostActionType | setUserProfileAT | setUserStatusAT
+export type ProfileActionsType = AddPostActionType | setUserProfileAT | setUserStatusAT

@@ -11,7 +11,7 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 import Dialogs from "./components/Dialogs/DialogsContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import UsersConteiner from "./components/Users/usersContainer";
-import {LoginFormik} from "./components/Login/LoginFormik";
+import Login, {LoginFormik} from "./components/Login/LoginFormik";
 
 
 
@@ -48,7 +48,7 @@ function App() {
                     <Route path='/music' render={() => <Music/>}/>
                     <Route path='/settings' render={() => <Settings/>}/>
                     <Route path='/users' render={()=><UsersConteiner />}/>
-                    <Route path='/login' render={()=><LoginFormik/>}/>
+                    <Route path='/login' render={()=><Login/>}/>
 
                 </div>
 

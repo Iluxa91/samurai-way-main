@@ -50,7 +50,7 @@ type LocationType = {
     city: string
     country: string
 }
-export const usersReducer = (state: initialUsersStateType = initialState, action: ActionsType): initialUsersStateType => {
+export const usersReducer = (state: initialUsersStateType = initialState, action: UsersActionsType): initialUsersStateType => {
     switch (action.type) {
         case 'FOLLOW':
             const us =  state.users.map(u => (u.id === action.userID) ? {...u, followed: true} : u)
@@ -96,7 +96,7 @@ export const toggleIsFollowingProgress = (isFetching:boolean,userID:number) => (
 
 
 export const getUsers = (currentPage:number, pageSize:number) => {
-    return (dispatch:Dispatch<ActionsType>) => {
+    return (dispatch:Dispatch<UsersActionsType>) => {
         dispatch(setIsFetching(true))
         usersAPI.getUsers(currentPage, pageSize)
             .then(data => {
@@ -107,7 +107,7 @@ export const getUsers = (currentPage:number, pageSize:number) => {
     }
 }
 export const follow = (userId:number) => {
-    return (dispatch:Dispatch<ActionsType>) => {
+    return (dispatch:Dispatch<UsersActionsType>) => {
         dispatch(toggleIsFollowingProgress(true, userId))
         usersAPI.follow(userId)
             .then(data => {
@@ -119,7 +119,7 @@ export const follow = (userId:number) => {
     }
 }
 export const unFollow = (userId:number) => {
-    return (dispatch:Dispatch<ActionsType>) => {
+    return (dispatch:Dispatch<UsersActionsType>) => {
         dispatch(toggleIsFollowingProgress(true, userId))
         usersAPI.unFollow(userId)
             .then(data => {
@@ -139,4 +139,4 @@ type setTotalUserCountAT = ReturnType<typeof setTotalUserCount>
 type setIsFetchingAT = ReturnType<typeof setIsFetching>
 type ToggleIsFollowingProgressAT = ReturnType<typeof toggleIsFollowingProgress>
 
-type ActionsType = FollowAT | UnFollowAT | SetUsersAT | SetCurrentPageAT | setTotalUserCountAT | setIsFetchingAT | ToggleIsFollowingProgressAT
+export type UsersActionsType = FollowAT | UnFollowAT | SetUsersAT | SetCurrentPageAT | setTotalUserCountAT | setIsFetchingAT | ToggleIsFollowingProgressAT

@@ -1,9 +1,20 @@
-import React from 'react';
+import React from "react";
 import {useFormik} from "formik";
 import s from "./Login.module.css"
-import {authAPI} from "../../api/api";
+import {connect} from "react-redux";
+import {login} from "../../Redux/auth-reducer";
+import {Redirect} from "react-router-dom";
+import {AppReduxStoreType} from "../../Redux/store-redux";
 
-export const LoginFormik = () => {
+type PropsType = {
+    onSubmit: (values:LoginValuesType) => void
+}
+type LoginValuesType = {
+    email: string
+    password: string
+    rememberMe: boolean
+}
+export const LoginFormik = (props: PropsType) => {
     type FormikErrorType = {
         email?: string
         password?: string
@@ -30,12 +41,11 @@ export const LoginFormik = () => {
             return errors;
         },
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+            props.onSubmit({email:values.email,password:values.password,rememberMe:values.rememberMe})
         },
     });
     return (
         <form onSubmit={formik.handleSubmit}>
-            <span>Login In</span>
             <div>
                 <input
                     className = {formik.errors.email? s.error : ''}
@@ -66,3 +76,27 @@ export const LoginFormik = () => {
         </form>
     );
 };
+type MapStateToPropsType = ReturnType<typeof mapStateToProps>
+type MapDispatchToPropsType = {
+    login: (email:string, password:string, rememberMe:boolean) => void
+}
+const mapStateToProps = (state:AppReduxStoreType) => {
+    return {
+        isAuth: state.auth.isAuth,
+    }
+}
+type LoginPropsType = MapStateToPropsType & MapDispatchToPropsType
+const Login = (props:LoginPropsType) => {
+    const onSubmit = (values:LoginValuesType) => {
+        props.login(values.email,values.password,values.rememberMe)
+    }
+    if (props.isAuth){
+        return <Redirect to={"/profile"}/>
+    }
+    return <div>
+        <h2>Log In</h2>
+        <LoginFormik onSubmit={onSubmit}/>
+    </div>
+}
+
+export default connect (mapStateToProps,{login})(Login)

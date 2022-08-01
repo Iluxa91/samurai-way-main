@@ -1,9 +1,9 @@
 import s from './ProfileInfo.module.css'
 import {Preloader} from "../../Common/Preloader/Preloader";
-import {PropsType} from "../Profile";
+import {ProfilePropsType} from "../Profile";
 import {ProfileStatus} from "./ProfileStatus";
 
-const ProfileInfo = (props:PropsType) => {
+const ProfileInfo = (props:ProfilePropsType) => {
 if (!props.profile){
     return <Preloader/>
 }

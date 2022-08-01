@@ -7,7 +7,6 @@ import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {compose, Dispatch} from "redux";
 
-
 type PathParamType = {
     userId: string
 }
@@ -28,8 +27,6 @@ class ProfileContainer extends React.Component <CommonPropsType> {
         }
         this.props.getUserProfile(userId)
         this.props.getStatus(userId)
-        // profileAPI.getUserProfile(userId)
-        //     .then(data => {this.props.setUserProfile(data)})
     }
 
     render() {

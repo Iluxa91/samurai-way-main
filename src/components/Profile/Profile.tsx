@@ -3,13 +3,12 @@ import {MyPostsContainer} from "./My posts/MyPostsContainer";
 import {ProfileType} from "../../Redux/profile-reducer";
 import {Dispatch} from "redux";
 
-export type PropsType = {
+export type ProfilePropsType = {
     profile: ProfileType | null
     status: string
     updateStatus:(status:string)=>(dispatch:Dispatch)=>void
 }
-const Profile = (props: PropsType) => {
-
+const Profile = (props: ProfilePropsType) => {
     return (
         <div>
             <ProfileInfo profile={props.profile}
