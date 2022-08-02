@@ -43,9 +43,9 @@ const setAuthError = (authErrorMessage: string) => ({
 }) as const
 
 
-export const getAuthUserData = ():AppThunk => {
+export const getAuthUserData = ():AppThunk<Promise<void>> => {
     return (dispatch) => {
-        authAPI.me()
+        return authAPI.me()
             .then(data => {
                 if (data.resultCode === 0) {
                     let {id, email, login} = data.data

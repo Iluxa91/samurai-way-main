@@ -1,7 +1,8 @@
 import {connect} from "react-redux";
 import {AppReduxStoreType} from "../../Redux/store-redux";
 import {
-    follow, getUsers,
+    follow,
+    getUsers,
     setCurrentPage,
     toggleIsFollowingProgress,
     unFollow
@@ -9,7 +10,6 @@ import {
 import React from "react";
 import Users from "./Users";
 import {Preloader} from "../Common/Preloader/Preloader";
-import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {compose} from "redux";
 
 
@@ -34,15 +34,6 @@ class UsersConteiner extends React.Component<UserPropsType> {
 
     onPageChanged = (pageNumber: number) => {
         this.props.getUsers(pageNumber, this.props.pageSize)
-
-        // this.props.setIsFetching(true)
-        // this.props.setCurrentPage(pageNumber);
-        //
-        // usersAPI.getUsers(pageNumber, this.props.pageSize)
-        //     .then(data => {
-        //         this.props.setIsFetching(false)
-        //         this.props.setUsers(data.items)
-        //     })
     }
 
     render() {
@@ -72,34 +63,12 @@ let mapStateToProps = (state: AppReduxStoreType) => {
     }
 }
 
-// let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
-//     return {
-//         follow: (userID: number) => {
-//             dispatch(followAC(userID))
-//         },
-//         unfollow: (userID: number) => {
-//             dispatch(unFollowAC(userID))
-//         },
-//         setUsers: (users: UsersType[]) => {
-//             dispatch(setUsers(users))
-//         },
-//         setCurrentPage: (pageNumber: number) => {
-//             dispatch(setCurrentPageAC(pageNumber))
-//         },
-//         setTotalUserCount: (totalUsersCount: number) => {
-//             dispatch(setTotalUserCountAC(totalUsersCount))
-//         },
-//         setIsFetching: (isFetching: boolean) => {
-//             dispatch(setIsFetchingAC(isFetching))
-//         }
-//     }
-// }
 export default compose<React.ComponentType>(
-    withAuthRedirect,
     connect(mapStateToProps,
         {follow, unFollow, setCurrentPage,
             toggleIsFollowingProgress,getUsers})
 )(UsersConteiner)
+
 // export const UsersContainer = withAuthRedirect(connect(mapStateToProps,
 //     {follow, unFollow, setCurrentPage, toggleIsFollowingProgress,getUsers
 //     })(UsersConteiner))
