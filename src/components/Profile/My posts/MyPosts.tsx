@@ -4,7 +4,7 @@ import React from "react";
 import {MyPostPropsType} from "./MyPostsContainer";
 import {useFormik} from "formik";
 
-export const MyPosts = (props: MyPostPropsType) => {
+export const MyPosts = React.memo((props: MyPostPropsType) => {
 
     let postsElement = props.posts.map(el => <Post likesCount={el.likesCount} message={el.message}/>)
 
@@ -14,7 +14,7 @@ export const MyPosts = (props: MyPostPropsType) => {
         <div className={s.posts}>New posts</div>
         {postsElement}
     </div>
-}
+})
 
 type NewPostFormikPropsType = {
     addPost: (newPostText: string) => void
