@@ -2,9 +2,9 @@ import React from "react";
 import {useFormik} from "formik";
 import s from "./Login.module.css"
 import {connect} from "react-redux";
-import {login} from "../../Redux/auth-reducer";
+import {login} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
-import {AppReduxStoreType} from "../../Redux/store-redux";
+import {AppReduxStoreType} from "../../redux/store-redux";
 
 type PropsType = {
     onSubmit: (values:LoginValuesType) => void

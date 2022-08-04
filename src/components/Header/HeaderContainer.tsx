@@ -1,8 +1,8 @@
 import React from "react";
 import Header from "./Header";
 import {connect} from "react-redux";
-import {AppReduxStoreType} from "../../Redux/store-redux";
-import {logout} from "../../Redux/auth-reducer";
+import {AppReduxStoreType} from "../../redux/store-redux";
+import {logout} from "../../redux/auth-reducer";
 
 class HeaderContainer extends React.Component<CommonPropsType> {
     render() {

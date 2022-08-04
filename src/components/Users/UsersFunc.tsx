@@ -1,5 +1,5 @@
 import React from 'react';
-// import s from './users.module.css'
+// import s from './Users.module.css'
 // import {UserPropsType} from "./usersContainer";
 // import axios from 'axios'
 // import userPhoto from '../../assets/image/146031.png'

@@ -1,5 +1,5 @@
-import {AppThunk} from "../Redux/store-redux";
-import {getAuthUserData} from "../Redux/auth-reducer";
+import {AppThunk} from ".//store-redux";
+import {getAuthUserData} from ".//auth-reducer";
 
 let initialState: initialUsersStateType = {
     initialized: false
@@ -12,7 +12,7 @@ export type AppActionsType = SetInitializedSuccessAT
 
 export const appReducer = (state: initialUsersStateType = initialState, action: AppActionsType): initialUsersStateType => {
     switch (action.type) {
-        case 'INITIALIZED-SUCCESS':
+        case 'app/INITIALIZED-SUCCESS':
             return {
                 ...state,
                 initialized: true
@@ -23,7 +23,7 @@ export const appReducer = (state: initialUsersStateType = initialState, action: 
 }
 
 const setInitializedSuccess = () => ({
-    type: 'INITIALIZED-SUCCESS'}) as const
+    type: 'app/INITIALIZED-SUCCESS'}) as const
 
 export const initializeApp = ():AppThunk => {
     return (dispatch) => {

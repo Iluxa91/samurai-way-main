@@ -1,6 +1,6 @@
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainer} from "./My posts/MyPostsContainer";
-import {ProfileType} from "../../Redux/profile-reducer";
+import {ProfileType} from "../../redux/profile-reducer";
 import {Dispatch} from "redux";
 
 export type ProfilePropsType = {

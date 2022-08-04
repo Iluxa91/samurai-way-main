@@ -1,14 +1,14 @@
 import {connect} from "react-redux";
-import {AppReduxStoreType} from "../../Redux/store-redux";
+import {AppReduxStoreType} from "../../redux/store-redux";
 import {
     follow,
     getUsers,
     setCurrentPage,
     toggleIsFollowingProgress,
     unFollow
-} from "../../Redux/users-reducer";
+} from "../../redux/users-reducer";
 import React from "react";
-import Users from "./Users";
+import {Users} from "./Users";
 import {Preloader} from "../Common/Preloader/Preloader";
 import {compose} from "redux";
 import {
@@ -16,15 +16,12 @@ import {
     getPageSize,
     getTotalUsersCount,
     getUsersSelector
-} from "../../Redux/users-selectors";
+} from "../../redux/users-selectors";
 
 
 export type UserPropsType = MapDispatchToPropsType & MapStateToPropsType
 
 type MapDispatchToPropsType = {
-    // setUsers: (users: Array<UsersType>) => void
-    // setTotalUserCount: (totalUsersCount: number) => void
-    // setIsFetching: (isFetching: boolean) => void
     setCurrentPage: (pageNumber: number) => void
     toggleIsFollowingProgress: (isFetching: boolean,id:number) => void
     follow: (userID: number) => void
@@ -35,11 +32,13 @@ type MapStateToPropsType = ReturnType<typeof mapStateToProps>
 
 class UsersConteiner extends React.Component<UserPropsType> {
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize)
+        let {currentPage, pageSize} = this.props
+        this.props.getUsers(currentPage, pageSize)
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.getUsers(pageNumber, this.props.pageSize)
+        let {pageSize} = this.props
+        this.props.getUsers(pageNumber, pageSize)
     }
 
     render() {

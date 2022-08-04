@@ -30,10 +30,6 @@ export class ProfileStatus extends React.Component<PropsType> {
         }
     }
 
-    // componentDidUpdate(prevProps,prevState) {
-    //
-    // }
-
     render() {
         return (
             <div>
