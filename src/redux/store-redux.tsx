@@ -21,14 +21,11 @@ let rootReducer = combineReducers({
     // form:formReducer
 })
 
-
-
 // export type AppDispatch = ThunkDispatch<AppReduxStoreType, unknown, AppActionsType>
 // export const useAppDispatch = () => useDispatch<AppDispatch>()
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppReduxStoreType, unknown, AppRootActionsType>
 type AppRootActionsType = AuthActionsType | DialogsActionsType | ProfileActionsType | UsersActionsType | AppActionsType
 export type AppReduxStoreType = ReturnType<typeof rootReducer>
-
 
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const store = createStore(rootReducer,composeEnhancers(applyMiddleware(thunkMiddleware)))
