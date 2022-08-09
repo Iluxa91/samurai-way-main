@@ -3,7 +3,7 @@ import {AppThunk} from "./store-redux";
 
 let initialState: initialUsersStateType = {
     users: [] as Array<UsersType>,
-    pageSize: 100,
+    pageSize: 10,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,
