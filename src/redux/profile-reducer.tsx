@@ -1,5 +1,4 @@
 import {PhotosType} from "./users-reducer";
-import {Dispatch} from "redux";
 import {profileAPI} from "../api/api";
 import {AppThunk} from "./store-redux";
 
