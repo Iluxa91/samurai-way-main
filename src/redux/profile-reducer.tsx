@@ -23,12 +23,12 @@ export type PostsPropsType = {
     likesCount: number
 }
 export type ProfileType = {
-    aboutMe: string
-    contacts: ContactsType
-    lookingForAJob: boolean
-    lookingForAJobDescriptions: string
-    fullName: string
-    userId: number
+    aboutMe?: string
+    contacts?: ContactsType
+    lookingForAJob?: boolean
+    lookingForAJobDescriptions?: string
+    fullName?: string
+    userId?: number
     photos: PhotosType
 }
 type ContactsType = {
@@ -57,6 +57,8 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
             return {...state, status: action.status}
         case "profile/DELETE_POST":
             return {...state, posts: state.posts.filter(p => p.id !== action.postId)}
+        case 'profile/SAVE_PHOTO_SUCCESS':
+            return {...state, profile: {...state.profile, photos:action.photos}}
         default:
             return state
     }
@@ -79,6 +81,12 @@ export const updateStatus = (status: string): AppThunk => async dispatch => {
         dispatch(setStatus(status))
     }
 }
+export const savePhoto = (file: File): AppThunk => async dispatch => {
+    const data = await profileAPI.savePhoto(file)
+    if (data.resultCode === 0) {
+        dispatch(savePhotoSuccess(data.data.photos))
+    }
+}
 
 // Actions
 export const addPostActionCreator = (newPostText: string) => ({
@@ -91,15 +99,18 @@ const setUserProfile = (profile: ProfileType) => ({
 } as const)
 const setStatus = (status: string) => ({type: "profile/SET_STATUS", status} as const)
 export const deletePost = (postId: number) => ({type: "profile/DELETE_POST", postId} as const)
+export const savePhotoSuccess = (photos: PhotosType) => ({type: "profile/SAVE_PHOTO_SUCCESS", photos} as const)
 
 // Types
 type AddPostActionType = ReturnType<typeof addPostActionCreator>
 type SetUserProfileAT = ReturnType<typeof setUserProfile>
 type SetUserStatusAT = ReturnType<typeof setStatus>
 type DeletePostAT = ReturnType<typeof deletePost>
+type SavePhotoSuccessAT = ReturnType<typeof savePhotoSuccess>
 
 export type ProfileActionsType =
     AddPostActionType
     | SetUserProfileAT
     | SetUserStatusAT
     | DeletePostAT
+    | SavePhotoSuccessAT
