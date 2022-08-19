@@ -2,7 +2,6 @@ import React from "react";
 import {UsersType} from "../../redux/users-reducer";
 import {Paginator} from "../Common/Paginator/Paginator";
 import {User} from "./User";
-import s from "./Users.module.css"
 
 type PropsType = {
     totalUsersCount: number
