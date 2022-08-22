@@ -1,20 +1,18 @@
 import {PhotosType} from "./users-reducer";
 import {profileAPI} from "../api/api";
-import {AppThunk} from "./store-redux";
+import {AppReduxStoreType, AppThunk} from "./store-redux";
+import {ProfileFormikType} from "../components/Profile/ProfileInfo/ProfileDataForm";
 
-export type InitialStateType = {
-    posts: Array<PostsPropsType>
-    profile: null | ProfileType
-    status: string
-}
-let initialState = {
+export type InitialStateType = typeof initialState
+const initialState = {
     posts: [
         {id: 1, message: "How are you", likesCount: 12},
         {id: 2, message: "It's my first post", likesCount: 12},
         {id: 3, message: "I am glad to see you", likesCount: 12}
     ] as Array<PostsPropsType>,
-    profile: null,
-    status: ""
+    profile: null as null | ProfileType,
+    status: "",
+    profileErrorMessage: ""
 }
 
 export type PostsPropsType = {
@@ -26,20 +24,21 @@ export type ProfileType = {
     aboutMe?: string
     contacts?: ContactsType
     lookingForAJob?: boolean
-    lookingForAJobDescriptions?: string
+    lookingForAJobDescription?: string
     fullName?: string
     userId?: number
-    photos: PhotosType
+    photos?: PhotosType
 }
-type ContactsType = {
-    facebook: string
-    website: string
-    vk: string
-    twitter: string
-    instagram: string
-    youtube: string
-    github: string
-    mainLink: string
+export type ContactsType = {
+    [key: string]: string | undefined
+    facebook?: string
+    website?: string
+    vk?: string
+    twitter?: string
+    instagram?: string
+    youtube?: string
+    github?: string
+    mainLink?: string
 }
 
 export const profileReducer = (state: InitialStateType = initialState, action: ProfileActionsType): InitialStateType => {
@@ -57,8 +56,10 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
             return {...state, status: action.status}
         case "profile/DELETE_POST":
             return {...state, posts: state.posts.filter(p => p.id !== action.postId)}
-        case 'profile/SAVE_PHOTO_SUCCESS':
-            return {...state, profile: {...state.profile, photos:action.photos}}
+        case "profile/SAVE_PHOTO_SUCCESS":
+            return {...state, profile: {...state.profile, photos: action.photos}}
+        case "profile/SET_PROFILE_ERROR":
+            return {...state, profileErrorMessage: action.profileErrorMessage}
         default:
             return state
     }
@@ -87,6 +88,17 @@ export const savePhoto = (file: File): AppThunk => async dispatch => {
         dispatch(savePhotoSuccess(data.data.photos))
     }
 }
+export const saveProfile = (profile: ProfileFormikType): AppThunk => async (dispatch, getState: () => AppReduxStoreType) => {
+    const userId = getState().auth.userId
+    const data = await profileAPI.saveProfile(profile)
+    if (data.resultCode === 0) {
+        dispatch(getUserProfile(userId!))
+        dispatch(setProfileError(''))
+    } else {
+        let message = data.messages.length > 0 ? data.messages[0] : "Some error"
+        dispatch(setProfileError(message))
+    }
+}
 
 // Actions
 export const addPostActionCreator = (newPostText: string) => ({
@@ -98,19 +110,24 @@ const setUserProfile = (profile: ProfileType) => ({
     profile
 } as const)
 const setStatus = (status: string) => ({type: "profile/SET_STATUS", status} as const)
-export const deletePost = (postId: number) => ({type: "profile/DELETE_POST", postId} as const)
-export const savePhotoSuccess = (photos: PhotosType) => ({type: "profile/SAVE_PHOTO_SUCCESS", photos} as const)
+export const deletePost = (postId: number) => ({
+    type: "profile/DELETE_POST",
+    postId
+} as const)
+export const savePhotoSuccess = (photos: PhotosType) => ({
+    type: "profile/SAVE_PHOTO_SUCCESS",
+    photos
+} as const)
+export const setProfileError = (profileErrorMessage: string) => ({
+    type: "profile/SET_PROFILE_ERROR",
+    profileErrorMessage
+}) as const
 
 // Types
-type AddPostActionType = ReturnType<typeof addPostActionCreator>
-type SetUserProfileAT = ReturnType<typeof setUserProfile>
-type SetUserStatusAT = ReturnType<typeof setStatus>
-type DeletePostAT = ReturnType<typeof deletePost>
-type SavePhotoSuccessAT = ReturnType<typeof savePhotoSuccess>
-
 export type ProfileActionsType =
-    AddPostActionType
-    | SetUserProfileAT
-    | SetUserStatusAT
-    | DeletePostAT
-    | SavePhotoSuccessAT
+    ReturnType<typeof addPostActionCreator>
+    | ReturnType<typeof setUserProfile>
+    | ReturnType<typeof setStatus>
+    | ReturnType<typeof deletePost>
+    | ReturnType<typeof savePhotoSuccess>
+    | ReturnType<typeof setProfileError>

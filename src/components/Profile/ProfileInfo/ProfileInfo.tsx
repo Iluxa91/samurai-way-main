@@ -2,12 +2,15 @@ import s from "./ProfileInfo.module.css"
 import {Preloader} from "../../Common/Preloader/Preloader";
 import {ProfilePropsType} from "../Profile";
 import {ProfileStatus} from "./ProfileStatus";
-import {ChangeEvent, useRef} from "react";
+import React, {ChangeEvent, useRef, useState} from "react";
 import userPhoto from "../../../assets/image/146031.png"
+import {ProfileType} from "../../../redux/profile-reducer";
+import {ProfileDataForm, ProfileFormikType} from "./ProfileDataForm";
 
 export const ProfileInfo = (props: ProfilePropsType) => {
 
     const inputRef = useRef<HTMLInputElement>(null)
+    const [editMode, setEditMode] = useState(false)
 
     const selectFileHandler = () => {
         inputRef && inputRef.current?.click();
@@ -21,10 +24,14 @@ export const ProfileInfo = (props: ProfilePropsType) => {
     if (!props.profile) {
         return <Preloader/>
     }
+    const onSubmit = (values: ProfileFormikType) => {
+        props.saveProfile(values)
+        setEditMode(false)
+    }
     return (
         <div>
             <div className={s.descriptionBlock}>
-                <img src={props.profile.photos.large || userPhoto}
+                <img src={props.profile.photos?.large || userPhoto}
                      className={s.mainPhoto}/>
                 {props.isOwner &&
                     <div>
@@ -37,14 +44,67 @@ export const ProfileInfo = (props: ProfilePropsType) => {
                         />
                     </div>
                 }
+                {editMode
+                    ? <ProfileDataForm profile={props.profile} onSubmit={onSubmit}/>
+                    : <ProfileData isOwner={props.isOwner} profile={props.profile}
+                                   goToEditMode={() => {
+                                       setEditMode(true)
+                                   }}
+                                   errorMessage={props.errorMessage}/>}
+
                 <ProfileStatus
                     status={props.status}
                     updateStatus={props.updateStatus}
                 />
-                <div>{props.profile.fullName}</div>
-                {/*<div>{props.profile.aboutMe}</div>*/}
-                {/*<div>{props.profile.lookingForAJobDescriptions}</div>*/}
             </div>
         </div>)
 }
+
+type ContactPropsType = {
+    [key: string]: string | undefined;
+    contactTitle: string
+    contactValue: string | undefined
+}
+export const Contact = ({contactTitle, contactValue}: ContactPropsType) => {
+    return <div className={s.contacts}>
+        <b>{contactTitle}</b>: {contactValue}
+    </div>
+}
+
+type ProfileDataType = {
+    profile: ProfileType
+    isOwner: boolean
+    goToEditMode: () => void
+    errorMessage: string
+}
+const ProfileData = ({profile, isOwner, goToEditMode, errorMessage}: ProfileDataType) => {
+    return <div>
+        {isOwner && <div>
+            <button onClick={goToEditMode}>edit</button>
+            {errorMessage && <div className={s.error}>{errorMessage}</div>}
+        </div>}
+        <div>
+            <b>Full name</b>: {profile.fullName}
+        </div>
+        <div>
+            <b>Looking for a
+                job</b>: {profile.lookingForAJob ? "yes" : "no"}
+        </div>
+
+        {profile.lookingForAJob && <div>
+            <b>My professional
+                skills</b>: {profile.lookingForAJobDescription}
+        </div>}
+        <div>
+            <b>About me</b>: {profile.aboutMe}
+        </div>
+        <div>
+            <b>Contacts</b>: {profile.contacts && Object.keys(profile.contacts).map(key => {
+            return <Contact key={key} contactTitle={key}
+                            contactValue={profile.contacts && profile.contacts[key]}/>
+        })}
+        </div>
+    </div>
+}
+
 

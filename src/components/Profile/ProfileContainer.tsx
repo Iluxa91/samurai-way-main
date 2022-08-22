@@ -6,11 +6,13 @@ import {
     getStatus,
     getUserProfile,
     savePhoto,
+    saveProfile,
     updateStatus
 } from "../../redux/profile-reducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {compose, Dispatch} from "redux";
+import {ProfileFormikType} from "./ProfileInfo/ProfileDataForm";
 
 type PathParamType = {
     userId: string
@@ -20,6 +22,7 @@ type MapDispatchToPropsType = {
     getStatus: (userId: number | null) => void
     updateStatus: (status: string) => (dispatch: Dispatch) => void
     savePhoto: (file: File) => (dispatch: Dispatch) => void
+    saveProfile: (profile: ProfileFormikType) => (dispatch: Dispatch) => void
 }
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
 type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -54,6 +57,8 @@ class ProfileContainer extends React.Component <CommonPropsType> {
                         updateStatus={this.props.updateStatus}
                         isOwner={!this.props.match.params.userId}
                         savePhoto={this.props.savePhoto}
+                        saveProfile={this.props.saveProfile}
+                        errorMessage={this.props.errorMessage}
         />
     }
 }
@@ -62,10 +67,17 @@ let mapStateToProps = (state: AppReduxStoreType) => ({
     profile: state.profilePage.profile,
     status: state.profilePage.status,
     authorizedUserId: state.auth.userId,
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
+    errorMessage: state.profilePage.profileErrorMessage
 })
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, savePhoto}),
+    connect(mapStateToProps, {
+        getUserProfile,
+        getStatus,
+        updateStatus,
+        savePhoto,
+        saveProfile
+    }),
     withRouter,
     withAuthRedirect
 )(ProfileContainer)

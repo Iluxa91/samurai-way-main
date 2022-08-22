@@ -7,7 +7,7 @@ import {Redirect} from "react-router-dom";
 import {AppReduxStoreType} from "../../redux/store-redux";
 
 type PropsType = {
-    onSubmit: (values:LoginValuesType) => void
+    onSubmit: (values: LoginValuesType) => void
     errorMessage: string | null
 }
 type LoginValuesType = {
@@ -23,52 +23,58 @@ export const LoginFormik = (props: PropsType) => {
     }
     const formik = useFormik({
         initialValues: {
-            email: '',
-            password: '',
+            email: "",
+            password: "",
             rememberMe: false
         },
         validate: (values) => {
             const errors: FormikErrorType = {};
             if (!values.email) {
-                errors.email = 'Required';
+                errors.email = "Required";
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-                errors.email = 'Invalid email address';
+                errors.email = "Invalid email address";
             }
             if (!values.password) {
-                errors.password = 'Required'
-            } else if (values.password.length < 3){
-                errors.password = 'should be > 2'
+                errors.password = "Required"
+            } else if (values.password.length < 3) {
+                errors.password = "should be > 2"
             }
             return errors;
         },
         onSubmit: values => {
-            props.onSubmit({email:values.email,password:values.password,rememberMe:values.rememberMe})
+            props.onSubmit({
+                email: values.email,
+                password: values.password,
+                rememberMe: values.rememberMe
+            })
         },
     });
     return (
         <form onSubmit={formik.handleSubmit}>
             <div>
                 <input
-                    className = {formik.errors.email? s.error : ''}
-                    placeholder={'email'}
-                    {...formik.getFieldProps('email')}
+                    className={formik.errors.email ? s.error : ""}
+                    placeholder={"email"}
+                    {...formik.getFieldProps("email")}
                 />
-                {formik.touched.email && formik.errors.email && <div style={{color:'red'}}>{formik.errors.email}</div>}
+                {formik.touched.email && formik.errors.email &&
+                    <div style={{color: "red"}}>{formik.errors.email}</div>}
             </div>
             <div>
                 <input
-                    className = {formik.errors.password? s.error : ''}
-                    placeholder={'password'}
-                    {...formik.getFieldProps('password')}
+                    className={formik.errors.password ? s.error : ""}
+                    placeholder={"password"}
+                    {...formik.getFieldProps("password")}
                 />
-                {formik.touched.password && formik.errors.password && <div style={{color:'red'}}>{formik.errors.password}</div>}
+                {formik.touched.password && formik.errors.password &&
+                    <div style={{color: "red"}}>{formik.errors.password}</div>}
             </div>
             <div>
                 <label className="checkbox-input">
                     <input
                         type={"checkbox"}
                         checked={formik.values.rememberMe}
-                        {...formik.getFieldProps('rememberMe')}
+                        {...formik.getFieldProps("rememberMe")}
                     />
                     Remember Me
                 </label>
@@ -80,21 +86,21 @@ export const LoginFormik = (props: PropsType) => {
 };
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
 type MapDispatchToPropsType = {
-    login: (email:string, password:string, rememberMe:boolean) => void
+    login: (email: string, password: string, rememberMe: boolean) => void
 
 }
-const mapStateToProps = (state:AppReduxStoreType) => {
+const mapStateToProps = (state: AppReduxStoreType) => {
     return {
         isAuth: state.auth.isAuth,
         authErrorMessage: state.auth.authErrorMessage
     }
 }
 type LoginPropsType = MapStateToPropsType & MapDispatchToPropsType
-const Login = (props:LoginPropsType) => {
-    const onSubmit = (values:LoginValuesType) => {
-        props.login(values.email,values.password,values.rememberMe)
+const Login = (props: LoginPropsType) => {
+    const onSubmit = (values: LoginValuesType) => {
+        props.login(values.email, values.password, values.rememberMe)
     }
-    if (props.isAuth){
+    if (props.isAuth) {
         return <Redirect to={"/profile"}/>
     }
     return <div>
@@ -103,4 +109,4 @@ const Login = (props:LoginPropsType) => {
     </div>
 }
 
-export default connect (mapStateToProps,{login})(Login)
+export default connect(mapStateToProps, {login})(Login)

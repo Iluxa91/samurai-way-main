@@ -11,7 +11,8 @@ let startState = {
         {id: 3, message: "I am glad to see you", likesCount: 12}
     ] as Array<PostsPropsType>,
     profile: null,
-    status: ''
+    status: '',
+    profileErrorMessage: ''
 }
 
 it('new post should be added',()=>{

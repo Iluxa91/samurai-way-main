@@ -34,7 +34,7 @@ const setAuthUserData = (userId: number | null, email: string | null, login: str
     type: "auth/SET_USER_DATA",
     payload: {userId, email, login, isAuth}
 }) as const
-const setAuthError = (authErrorMessage: string) => ({
+export const setAuthError = (authErrorMessage: string) => ({
     type: "auth/SET_AUTH_ERROR",
     authErrorMessage
 }) as const

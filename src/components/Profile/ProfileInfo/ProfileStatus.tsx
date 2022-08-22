@@ -35,7 +35,7 @@ export class ProfileStatus extends React.Component<PropsType> {
             <div>
                 {!this.state.editMode &&
                     <div>
-                        <span onDoubleClick={this.activateEditMode}>{this.props.status || "No Status"}</span>
+                        <b>Status</b>: <span onDoubleClick={this.activateEditMode}>{this.props.status || "No Status"}</span>
                     </div>
                 }
                 {this.state.editMode &&

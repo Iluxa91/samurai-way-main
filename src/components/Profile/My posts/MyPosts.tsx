@@ -6,7 +6,7 @@ import {useFormik} from "formik";
 
 export const MyPosts = React.memo((props: MyPostPropsType) => {
 
-    let postsElement = props.posts.map(el => <Post likesCount={el.likesCount} message={el.message}/>)
+    let postsElement = props.posts.map(el => <Post key={el.id} likesCount={el.likesCount} message={el.message}/>)
 
     return <div className={s.postsBlock}>
         <h3>My Posts</h3>
