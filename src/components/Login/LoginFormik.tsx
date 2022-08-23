@@ -9,11 +9,13 @@ import {AppReduxStoreType} from "../../redux/store-redux";
 type PropsType = {
     onSubmit: (values: LoginValuesType) => void
     errorMessage: string | null
+    captchaUrl: string | null
 }
 type LoginValuesType = {
     email: string
     password: string
-    rememberMe: boolean
+    rememberMe: boolean,
+    captcha: string | null
 }
 export const LoginFormik = (props: PropsType) => {
     type FormikErrorType = {
@@ -25,7 +27,8 @@ export const LoginFormik = (props: PropsType) => {
         initialValues: {
             email: "",
             password: "",
-            rememberMe: false
+            rememberMe: false,
+            captcha: ''
         },
         validate: (values) => {
             const errors: FormikErrorType = {};
@@ -45,7 +48,8 @@ export const LoginFormik = (props: PropsType) => {
             props.onSubmit({
                 email: values.email,
                 password: values.password,
-                rememberMe: values.rememberMe
+                rememberMe: values.rememberMe,
+                captcha: values.captcha
             })
         },
     });
@@ -79,33 +83,46 @@ export const LoginFormik = (props: PropsType) => {
                     Remember Me
                 </label>
             </div>
+            <div>
+                {props.captchaUrl && <img alt='captcha' src={props.captchaUrl}/>}
+            </div>
+            <div>
+                {props.captchaUrl && <input
+                    placeholder={"symbols from image"}
+                    {...formik.getFieldProps("captcha")}
+                />}
+            </div>
+
             {props.errorMessage && <div className={s.error}>{props.errorMessage}</div>}
+
             <button type="submit">Login</button>
         </form>
     );
 };
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
 type MapDispatchToPropsType = {
-    login: (email: string, password: string, rememberMe: boolean) => void
+    login: (email: string, password: string, rememberMe: boolean, captchaUrl: string | null) => void
 
 }
 const mapStateToProps = (state: AppReduxStoreType) => {
     return {
         isAuth: state.auth.isAuth,
-        authErrorMessage: state.auth.authErrorMessage
+        authErrorMessage: state.auth.authErrorMessage,
+        captchaUrl: state.auth.captchaUrl
     }
 }
 type LoginPropsType = MapStateToPropsType & MapDispatchToPropsType
 const Login = (props: LoginPropsType) => {
     const onSubmit = (values: LoginValuesType) => {
-        props.login(values.email, values.password, values.rememberMe)
+        props.login(values.email, values.password, values.rememberMe, values.captcha)
     }
     if (props.isAuth) {
         return <Redirect to={"/profile"}/>
     }
     return <div>
         <h2>Log In</h2>
-        <LoginFormik onSubmit={onSubmit} errorMessage={props.authErrorMessage}/>
+        <LoginFormik onSubmit={onSubmit} errorMessage={props.authErrorMessage}
+                     captchaUrl={props.captchaUrl}/>
     </div>
 }
 
