@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../components/Navbar/Navbar";
-import {Route} from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 import {News} from "../components/News/News";
 import {Music} from "../components/Music/Music";
 import {Settings} from "../components/Settings/Settings";
@@ -22,9 +22,11 @@ const Dialogs = React.lazy(() => import("../components/Dialogs/DialogsContainer"
 
 class App extends React.Component<MapDispatchToPropsType & MapStateToPropsType> {
 
+
     componentDidMount() {
         this.props.initializeApp()
     }
+
 
     render() {
         if (!this.props.initialized) {
@@ -35,16 +37,22 @@ class App extends React.Component<MapDispatchToPropsType & MapStateToPropsType> 
                 <HeaderContainer/>
                 <Navbar/>
                 <div className="app-wrapper-content">
-                    <Route path="/dialogs"
-                           render={() => <WithSuspense children={<Dialogs/>}/>}/>
-                    <Route path="/profile/:userId?"
-                           render={() => <WithSuspense children={<ProfileContainer/>}/>}/>
-                    <Route path="/news" render={() => <News/>}/>
-                    <Route path="/music" render={() => <Music/>}/>
-                    <Route path="/settings" render={() => <Settings/>}/>
-                    <Route path="/users" render={() => <UsersConteiner/>}/>
-                    <Route path="/login"
-                           render={() => <WithSuspense children={<Login/>}/>}/>
+                    <Switch>
+                        <Route exact path="/" render={() => <Redirect to="/profile"/>}/>
+                        <Route path="/dialogs"
+                               render={() => <WithSuspense children={<Dialogs/>}/>}/>
+                        <Route path="/profile/:userId?"
+                               render={() => <WithSuspense
+                                   children={<ProfileContainer/>}/>}/>
+                        <Route path="/news" render={() => <News/>}/>
+                        <Route path="/music" render={() => <Music/>}/>
+                        <Route path="/settings" render={() => <Settings/>}/>
+                        <Route path="/users" render={() => <UsersConteiner/>}/>
+                        <Route path="/login"
+                               render={() => <WithSuspense children={<Login/>}/>}/>
+                        <Route path="*"
+                               render={() => <div>404 PAGE NOT FOUND</div>}/>
+                    </Switch>
                 </div>
             </div>
         );

@@ -77,9 +77,14 @@ export const getStatus = (userId: number): AppThunk => async dispatch => {
 
 }
 export const updateStatus = (status: string): AppThunk => async dispatch => {
-    const data = await profileAPI.updateStatus(status)
-    if (data.resultCode === 0) {
-        dispatch(setStatus(status))
+    try {
+        const data = await profileAPI.updateStatus(status)
+        if (data.resultCode === 0) {
+            dispatch(setStatus(status))
+        }
+    }
+    catch (err){
+       dispatch(setProfileError('Some error occured'))
     }
 }
 export const savePhoto = (file: File): AppThunk => async dispatch => {
@@ -93,7 +98,7 @@ export const saveProfile = (profile: ProfileFormikType): AppThunk => async (disp
     const data = await profileAPI.saveProfile(profile)
     if (data.resultCode === 0) {
         dispatch(getUserProfile(userId!))
-        dispatch(setProfileError(''))
+        dispatch(setProfileError(""))
     } else {
         let message = data.messages.length > 0 ? data.messages[0] : "Some error"
         dispatch(setProfileError(message))
