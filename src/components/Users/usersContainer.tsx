@@ -18,7 +18,6 @@ import {
     getUsersSelector
 } from "../../redux/users-selectors";
 
-
 export type UserPropsType = MapDispatchToPropsType & MapStateToPropsType
 
 type MapDispatchToPropsType = {

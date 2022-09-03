@@ -19,15 +19,11 @@ const ProfileContainer = React.lazy(() => import("../components/Profile/ProfileC
 // import Dialogs from "../components/Dialogs/DialogsContainer";
 const Dialogs = React.lazy(() => import("../components/Dialogs/DialogsContainer"))
 
-
 class App extends React.Component<MapDispatchToPropsType & MapStateToPropsType> {
-
 
     componentDidMount() {
         this.props.initializeApp()
     }
-
-
     render() {
         if (!this.props.initialized) {
             return <Preloader/>
