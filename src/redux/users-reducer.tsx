@@ -1,5 +1,6 @@
 import {usersAPI} from "../api/api";
 import {AppThunk} from "./store-redux";
+import {createSelector} from "reselect";
 
 let initialState: initialUsersStateType = {
     users: [] as Array<UsersType>,
@@ -7,7 +8,8 @@ let initialState: initialUsersStateType = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,
-    followingInProgress: [] as Array<number>
+    followingInProgress: [] as Array<number>,
+    filter: ""
 }
 
 export type initialUsersStateType = {
@@ -17,6 +19,7 @@ export type initialUsersStateType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: number[]
+    filter: string
 }
 export type UsersType = {
     id: number
@@ -58,18 +61,30 @@ export const usersReducer = (state: initialUsersStateType = initialState, action
             return {...state, totalUsersCount: action.totalUsersCount}
         case "users/SET_IS_FETCHING":
             return {...state, isFetching: action.isFetching}
+        case "users/SET-FILTER":
+            return {...state, filter: action.filter}
         case "users/TOGGLE_IS_FOLLOWING_PROGRESS":
             return {
                 ...state,
                 followingInProgress: action.isFetching
                     ? [...state.followingInProgress, action.userID]
-                    : state.followingInProgress.filter(id => id != action.userID)
+                    : state.followingInProgress.filter(id => id !== action.userID)
             }
         default:
             return state
     }
 }
 
+const getUsersSelector = (state: initialUsersStateType) => state.users
+export const getFilterSelector = (state: initialUsersStateType) => state.filter
+
+export const getFilteredUsersReselect = createSelector(
+    getUsersSelector,
+    getFilterSelector,
+    (users, filter) => {
+        return users.filter(u => u.name.toUpperCase().indexOf(filter.toUpperCase()) > -1)
+    }
+)
 
 // Actions
 export const followSuccess = (userID: number) => ({type: "users/FOLLOW", userID}) as const
@@ -96,6 +111,9 @@ export const setIsFetching = (isFetching: boolean) => ({
 export const toggleIsFollowingProgress = (isFetching: boolean, userID: number) => ({
     type: "users/TOGGLE_IS_FOLLOWING_PROGRESS", isFetching, userID
 } as const)
+export const setFilter = (filter: string) => ({
+    type: "users/SET-FILTER", filter
+} as const)
 
 // Thunks
 export const getUsers = (page: number, pageSize: number): AppThunk => async dispatch => {
@@ -113,7 +131,7 @@ export const follow = (userId: number): AppThunk => async dispatch => {
     dispatch(toggleIsFollowingProgress(true, userId))
     const data = await usersAPI.follow(userId)
 
-    if (data.resultCode == 0) {
+    if (data.resultCode === 0) {
         dispatch(followSuccess(userId))
     }
     dispatch(toggleIsFollowingProgress(false, userId))
@@ -122,7 +140,7 @@ export const unFollow = (userId: number): AppThunk => async dispatch => {
     dispatch(toggleIsFollowingProgress(true, userId))
     const data = await usersAPI.unFollow(userId)
 
-    if (data.resultCode == 0) {
+    if (data.resultCode === 0) {
         dispatch(unFollowSuccess(userId))
     }
     dispatch(toggleIsFollowingProgress(false, userId))
@@ -136,6 +154,7 @@ type SetCurrentPageAT = ReturnType<typeof setCurrentPage>
 type setTotalUserCountAT = ReturnType<typeof setTotalUserCount>
 type setIsFetchingAT = ReturnType<typeof setIsFetching>
 type ToggleIsFollowingProgressAT = ReturnType<typeof toggleIsFollowingProgress>
+type setFilterAT = ReturnType<typeof setFilter>
 export type UsersActionsType =
     FollowAT
     | UnFollowAT
@@ -144,3 +163,4 @@ export type UsersActionsType =
     | setTotalUserCountAT
     | setIsFetchingAT
     | ToggleIsFollowingProgressAT
+    | setFilterAT

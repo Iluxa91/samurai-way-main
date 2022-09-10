@@ -2,8 +2,11 @@ import {connect} from "react-redux";
 import {AppReduxStoreType} from "../../redux/store-redux";
 import {
     follow,
+    getFilteredUsersReselect,
+    getFilterSelector,
     getUsers,
     setCurrentPage,
+    setFilter,
     toggleIsFollowingProgress,
     unFollow
 } from "../../redux/users-reducer";
@@ -12,10 +15,11 @@ import {Users} from "./Users";
 import {Preloader} from "../Common/Preloader/Preloader";
 import {compose} from "redux";
 import {
-    getCurrentPage, getFollowingInProgress, getIsFetching,
+    getCurrentPage,
+    getFollowingInProgress,
+    getIsFetching,
     getPageSize,
     getTotalUsersCount,
-    getUsersSelector
 } from "../../redux/users-selectors";
 
 export type UserPropsType = MapDispatchToPropsType & MapStateToPropsType
@@ -26,6 +30,7 @@ type MapDispatchToPropsType = {
     follow: (userID: number) => void
     unFollow: (userID: number) => void
     getUsers: (page:number, pageSize:number) => void
+    setFilter: (filter:string) => void
 }
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
 
@@ -50,7 +55,8 @@ class UsersConteiner extends React.Component<UserPropsType> {
                    unFollow={this.props.unFollow}
                    follow={this.props.follow}
                    followingInProgress={this.props.followingInProgress}
-
+                   setFilter={this.props.setFilter}
+                   filter={this.props.filter}
             />
         </>
     }
@@ -58,7 +64,8 @@ class UsersConteiner extends React.Component<UserPropsType> {
 
 let mapStateToProps = (state: AppReduxStoreType) => {
     return {
-        users: getUsersSelector(state),
+        filter: getFilterSelector(state.usersPage),
+        users: getFilteredUsersReselect(state.usersPage),
         pageSize: getPageSize(state),
         totalUsersCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),
@@ -70,7 +77,7 @@ let mapStateToProps = (state: AppReduxStoreType) => {
 export default compose<React.ComponentType>(
     connect(mapStateToProps,
         {follow, unFollow, setCurrentPage,
-            toggleIsFollowingProgress,getUsers})
+            toggleIsFollowingProgress,getUsers,setFilter})
 )(UsersConteiner)
 
 // export const UsersContainer = withAuthRedirect(connect(mapStateToProps,
