@@ -1,0 +1,10 @@
+.preloaderContainer {
+    position: fixed;
+    top: 30%;
+    text-align: center;
+    width: 75%;
+}
+.img {
+    height: 60px;
+    width: 60px
+}

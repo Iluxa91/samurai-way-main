@@ -1,4 +1,5 @@
 import {NavLink} from 'react-router-dom';
+import logo from '../../assets/image/web-icon-logo.png'
 import s from './Header.module.css'
 
 type PropsType = {
@@ -9,16 +10,15 @@ type PropsType = {
 
 const Header = (props: PropsType) => {
     return <header className={s.header}>
-        <img src="https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg"/>
+        <img src={logo}/>
         <div className={s.loginBlock}>
             {props.isAuth ?
                 <div>
-                    <span>{props.login}</span>
+                    <span >{props.login}</span>
                     <button onClick={props.logout}>Log out</button>
                 </div>
                 : <NavLink to={'/login'}>Login</NavLink>}
         </div>
-
     </header>
 }
 export default Header;

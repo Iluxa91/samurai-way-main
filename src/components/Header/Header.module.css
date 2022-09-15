@@ -1,13 +1,22 @@
 .header {
     grid-area: h;
-    background-color: rebeccapurple;
+    background-color: #c9a1d4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
-
 .header img {
     width: 40px;
+    padding-left: 20px;
 }
-.loginBlock {
-    float: right;
+.loginBlock button {
+   margin: 20px;
+   border: none;
+   font-size: medium;
+   outline: none;
+   cursor: pointer;
+   color: #8221baed;
+   background-color: #c9a1d4;
 }
 .loginBlock a{
     color:white;

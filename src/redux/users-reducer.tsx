@@ -80,7 +80,7 @@ export const getFilterSelector = (state: initialUsersStateType) => state.filter
 
 export const getFilteredUsersReselect = createSelector(
     getUsersSelector,
-    getFilterSelector,
+     getFilterSelector,
     (users, filter) => {
         return users.filter(u => u.name.toUpperCase().indexOf(filter.toUpperCase()) > -1)
     }
