@@ -24,9 +24,7 @@ const Profile = (props: ProfilePropsType) => {
                          saveProfile={props.saveProfile}
                          errorMessage={props.errorMessage}
             />
-            <MyPostsContainer
-                // store={props.store}
-            />
+            <MyPostsContainer/>
         </div>)
 }
 export default Profile;

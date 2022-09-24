@@ -1,13 +1,17 @@
-
 .descriptionBlock {
     padding: 10px;
+    display: flex;
 }
 .mainPhoto {
     max-width: 200px;
+    border-radius: 15px;
 }
 .contacts {
     margin-left: 10px;
 }
 .error {
     color: red;
+}
+.profileInfo {
+    margin-left: 50px;
 }

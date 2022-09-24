@@ -31,31 +31,34 @@ export const ProfileInfo = (props: ProfilePropsType) => {
     return (
         <div>
             <div className={s.descriptionBlock}>
-                <img src={props.profile.photos?.large || userPhoto}
-                     className={s.mainPhoto}/>
-                {props.isOwner &&
-                    <div>
-                        <button onClick={selectFileHandler}>upload file</button>
-                        <input
-                            style={{display: "none"}}
-                            ref={inputRef}
-                            type="file"
-                            onChange={onMainPhotoSelected}
-                        />
-                    </div>
-                }
-                {editMode
-                    ? <ProfileDataForm profile={props.profile} onSubmit={onSubmit}/>
-                    : <ProfileData isOwner={props.isOwner} profile={props.profile}
-                                   goToEditMode={() => {
-                                       setEditMode(true)
-                                   }}
-                                   errorMessage={props.errorMessage}/>}
-
-                <ProfileStatus
-                    status={props.status}
-                    updateStatus={props.updateStatus}
-                />
+                <div>
+                    <img src={props.profile.photos?.large || userPhoto}
+                         className={s.mainPhoto} alt='avatar'/>
+                    {props.isOwner &&
+                        <div>
+                            <button onClick={selectFileHandler}>upload file</button>
+                            <input
+                                style={{display: "none"}}
+                                ref={inputRef}
+                                type="file"
+                                onChange={onMainPhotoSelected}
+                            />
+                        </div>
+                    }
+                    <ProfileStatus
+                        status={props.status}
+                        updateStatus={props.updateStatus}
+                    />
+                </div>
+                <div className={s.profileInfo}>
+                    {editMode
+                        ? <ProfileDataForm profile={props.profile} onSubmit={onSubmit}/>
+                        : <ProfileData isOwner={props.isOwner} profile={props.profile}
+                                       goToEditMode={() => {
+                                           setEditMode(true)
+                                       }}
+                                       errorMessage={props.errorMessage}/>}
+                </div>
             </div>
         </div>)
 }
@@ -87,13 +90,10 @@ const ProfileData = ({profile, isOwner, goToEditMode, errorMessage}: ProfileData
             <b>Full name</b>: {profile.fullName}
         </div>
         <div>
-            <b>Looking for a
-                job</b>: {profile.lookingForAJob ? "yes" : "no"}
+            <b>Looking for a job</b>: {profile.lookingForAJob ? "yes" : "no"}
         </div>
-
         {profile.lookingForAJob && <div>
-            <b>My professional
-                skills</b>: {profile.lookingForAJobDescription}
+            <b>My professional skills</b>: {profile.lookingForAJobDescription}
         </div>}
         <div>
             <b>About me</b>: {profile.aboutMe}
