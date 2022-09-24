@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar/Navbar";
 import {Redirect, Route, Switch} from "react-router-dom";
-import {News} from "../components/News/News";
+import {ChatPage} from "../components/Chat/Chat";
 import {Music} from "../components/Music/Music";
 import {Settings} from "../components/Settings/Settings";
 import HeaderContainer from "../components/Header/HeaderContainer";
@@ -34,18 +34,19 @@ class App extends React.Component<MapDispatchToPropsType & MapStateToPropsType> 
                 <Navbar/>
                 <div className="app-wrapper-content">
                     <Switch>
+                        <Route path="/login"
+                               render={() => <WithSuspense children={<Login/>}/>}/>
                         <Route exact path="/" render={() => <Redirect to="/profile"/>}/>
                         <Route path="/dialogs"
                                render={() => <WithSuspense children={<Dialogs/>}/>}/>
                         <Route path="/profile/:userId?"
                                render={() => <WithSuspense
                                    children={<ProfileContainer/>}/>}/>
-                        <Route path="/news" render={() => <News/>}/>
+                        <Route path="/chat" render={() => <ChatPage/>}/>
                         <Route path="/music" render={() => <Music/>}/>
                         <Route path="/settings" render={() => <Settings/>}/>
                         <Route path="/users" render={() => <UsersConteiner/>}/>
-                        <Route path="/login"
-                               render={() => <WithSuspense children={<Login/>}/>}/>
+                        <Route path="/404" render={()=><h1 style={{ textAlign: 'center' }} >404: PAGE NOT FOUND</h1>} />
                         <Route path="*"
                                render={() => <div>404 PAGE NOT FOUND</div>}/>
                     </Switch>

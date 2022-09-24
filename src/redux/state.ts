@@ -1,5 +1,5 @@
+import {AddMessageType} from "./dialogs-reducer";
 
-import {AddMessageActionType} from "./dialogs-reducer";
 
 export type StoreType = {
     _state: StateType
@@ -9,7 +9,7 @@ export type StoreType = {
     dispatch: (action: ActionsType) => void
 }
 export type ActionsType =
-    | AddMessageActionType
+    | AddMessageType
 
 // export let store: StoreType = {
 //     _state: {

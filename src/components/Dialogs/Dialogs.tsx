@@ -1,84 +1,54 @@
-import d from './Dialogs.module.css'
-import {DialogsItems} from "./DialogItem/DialogItem";
-import {Message} from './Message/Message';
-import React from "react";
-import {DialogsConatainerPropsType} from "./DialogsContainer";
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {useFormik} from "formik";
+import React from "react"
+import s from "./Dialogs.module.css"
+import {DialogsType, MessageType} from "../../redux/dialogs-reducer";
+import {DialogItem} from "./DialogItem/DialogItem";
+import {MessageComponent} from "./Message/MessageComponent";
+import {
+    AlternativeMessage
+} from "./ALternativeMessage/AlternativeMessage";
 
-// type FormDataType = {
-//     newMessageBody:string
-// }
+type PropsType = {
+    dialogs: Array<DialogsType>
+    message: Array<MessageType>
+    addMessage: () => void
+}
 
-export const Dialogs = (props: DialogsConatainerPropsType) => {
-    let newMessageElement = React.createRef<HTMLTextAreaElement>()
-    let messageElement = props.dialogsPage.messageData.map(m => <Message message={m.message}/>)
-    let dialogElement = props.dialogsPage.dialogsData.map(d => <DialogsItems name={d.name} id={d.id}/>)
+export const Dialogs: React.FC<PropsType> = ({addMessage, dialogs, message}) => {
 
-// const addNewMessage = (formData: FormDataType) => {
-//     // console.log(formData.newMessageBody)
-//     props.addMessage(formData.newMessageBody)
-// }
+    const dialogsElements = dialogs.map(d =>
+        <DialogItem name={d.name} key={d.id} id={d.id} src={d.src}/>
+    )
+
+    const messageElements = message.map(m =>
+        <MessageComponent
+            key={m.id}
+            id={m.id}
+            avatar={m.avatar}
+            name={m.name}
+            message={m.message}
+            time={m.time}
+        />
+    )
+
+    const scroll = React.useRef(null)
 
     return (
-        <div className={d.dialogs}>
-            <div className={d.dialogsItems}>
-                {dialogElement}
+        <div className={s.dialogs}>
+            <div className={s.dialogsItems}>
+                {dialogsElements}
             </div>
-            <div className={d.messages}>
-                <div>{messageElement}</div>
-                {/*<div>*/}
-                {/*    <div>*/}
-                {/*        <textarea ref={newMessageElement}*/}
-                {/*                  onChange={onMessageChange}*/}
-                {/*                  value={props.dialogsPage.messageForDialog}*/}
-                {/*        />*/}
-                {/*    </div>*/}
-                {/*    <div>*/}
-                {/*        <button onClick={addMessage}>Add Message</button>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
-                {/*<AddMessageFromRedux onSubmit={addNewMessage}/>*/}
-                <AddMessageFormik addMessage={props.addMessage}/>
+            <div className={s.dialogF} style={{
+                overflow: "auto",
+                height: "500px",
+                WebkitOverflowScrolling: "touch"
+            }}>
+                {messageElements}
+                <div ref={scroll}/>
+            </div>
+            <div/>
+            <div style={{margin: "15px", marginLeft: "340px"}}>
+                <AlternativeMessage addMessage={addMessage} scroll={scroll}/>
             </div>
         </div>
-    )
-}
-
-type AddMessageFormikPropsType = {
-    addMessage: (value:string) => void
-}
-type FormikErrorType = {
-    newMessageBody?: string
-}
-
-export const AddMessageFormik = (props:AddMessageFormikPropsType) => {
-    const formik = useFormik({
-        initialValues: {
-            newMessageBody: '',
-        },
-        validate: values => {
-            const errors: FormikErrorType = {}
-            if (!values.newMessageBody){errors.newMessageBody='Required'}
-            else if (values.newMessageBody.length>100){errors.newMessageBody="Max length is 100 symbols"}
-            return errors
-        },
-        onSubmit: values => {
-            props.addMessage(values.newMessageBody)
-        },
-    });
-    return (
-        <form onSubmit={formik.handleSubmit}>
-            <div>
-                <textarea
-                    className = {formik.errors.newMessageBody? d.error : ''}
-                    placeholder={'New message'}
-                    {...formik.getFieldProps('newMessageBody')}
-                />
-                {formik.touched.newMessageBody && formik.errors.newMessageBody && <div style={{color:'red'}}>{formik.errors.newMessageBody}</div>}
-            </div>
-            <button type="submit">Add message</button>
-        </form>
-
     )
 }
