@@ -2,7 +2,7 @@ import {NavLink} from "react-router-dom";
 import {
     FaCogs,
     FaFacebookMessenger,
-    FaMusic,
+    FaMusic, FaRegCalendarAlt,
     FaRegUserCircle,
     FaUsers
 } from "react-icons/fa"
@@ -11,7 +11,7 @@ import s from "./Navbar.module.css"
 let styleIcon: React.CSSProperties = {
     color: 'rgb(56, 0, 0)'
 }
-const Navbar = () => {
+export const Navbar = () => {
     return (
         <nav className={s.nav}>
             <div className={s.item}>
@@ -38,6 +38,9 @@ const Navbar = () => {
                 <FaUsers style={styleIcon} />
                 <NavLink to='/users' activeClassName={s.activeLink}>Users</NavLink>
             </div>
+            <div className={s.item}>
+                <FaRegCalendarAlt style={styleIcon} />
+                <NavLink to='/calendar' activeClassName={s.activeLink}>Calendar</NavLink>
+            </div>
         </nav>)
 };
-export default Navbar;

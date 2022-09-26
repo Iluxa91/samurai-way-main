@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../components/Navbar/Navbar";
+import {Navbar} from "../components/Navbar/Navbar";
 import {Redirect, Route, Switch} from "react-router-dom";
 import {ChatPage} from "../components/Chat/Chat";
 import {Music} from "../components/Music/Music";
@@ -13,6 +13,7 @@ import {AppReduxStoreType} from "../redux/store-redux";
 import {Preloader} from "../components/Common/Preloader/Preloader";
 import "./App.css"
 import {WithSuspense} from "../hoc/WithSuspense";
+import {CalendarComponent} from "../components/Calendar/Calendar";
 
 // import ProfileContainer from "../components/Profile/ProfileContainer";
 const ProfileContainer = React.lazy(() => import("../components/Profile/ProfileContainer"))
@@ -46,6 +47,7 @@ class App extends React.Component<MapDispatchToPropsType & MapStateToPropsType> 
                         <Route path="/music" render={() => <Music/>}/>
                         <Route path="/settings" render={() => <Settings/>}/>
                         <Route path="/users" render={() => <UsersConteiner/>}/>
+                        <Route path="/calendar" render={()=><CalendarComponent/>} />
                         <Route path="/404" render={()=><h1 style={{ textAlign: 'center' }} >404: PAGE NOT FOUND</h1>} />
                         <Route path="*"
                                render={() => <div>404 PAGE NOT FOUND</div>}/>

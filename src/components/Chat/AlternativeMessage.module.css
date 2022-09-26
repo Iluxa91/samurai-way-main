@@ -2,8 +2,8 @@
   display: flex;
   float: right;
   margin-right: 50px;
+  height: 100%
 }
-
 .items input {
   border: none;
   outline: none;
@@ -24,20 +24,17 @@
   border: none;
   outline: none;
   margin: 2px 4px;
-  /* padding: 3px 8px; */
   border-radius: 15px 55px 55px 15px;
   background-image: linear-gradient(45deg, #65b5bd 35%, #1c4d87 50%);  /* background-size: 200% 200%; */
   background-size: 200% 200%;
   color: white;
   box-shadow: 0 16px 32px 0 rgba(0, 40, 120, .35);
   transition: .5s;
-
   height: 24px;
 }
 
 .items input:hover {
   transform: scale(1.01);
-
 }
 
 .items input:focus {

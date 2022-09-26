@@ -1,6 +1,7 @@
 .dialogs {
     display: grid;
     grid-template-columns: 2fr 8fr;
+    height: 100%
 }
 .dialogs a {
     color: #13157a;
