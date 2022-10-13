@@ -2,7 +2,7 @@ import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainer} from "./My posts/MyPostsContainer";
 import {ProfileType} from "../../redux/profile-reducer";
 import {Dispatch} from "redux";
-import {ProfileFormikType} from "./ProfileInfo/ProfileDataForm";
+import {ProfileFormikType} from "./ProfileInfo/ProfileData/ProfileDataForm";
 import s from './Profile.module.css'
 
 export type ProfilePropsType = {
@@ -14,7 +14,7 @@ export type ProfilePropsType = {
     saveProfile: (profile:ProfileFormikType) => (dispatch: Dispatch) => void
     errorMessage: string
 }
-const Profile = (props: ProfilePropsType) => {
+export const Profile = (props: ProfilePropsType) => {
     return (
         <div className={s.content}>
             <ProfileInfo profile={props.profile}
@@ -28,5 +28,4 @@ const Profile = (props: ProfilePropsType) => {
             <MyPostsContainer/>
         </div>)
 }
-export default Profile;
 

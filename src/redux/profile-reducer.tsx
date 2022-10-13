@@ -1,7 +1,7 @@
 import {PhotosType} from "./users-reducer";
 import {profileAPI} from "../api/api";
 import {AppReduxStoreType, AppThunk} from "./store-redux";
-import {ProfileFormikType} from "../components/Profile/ProfileInfo/ProfileDataForm";
+import {ProfileFormikType} from "../components/Profile/ProfileInfo/ProfileData/ProfileDataForm";
 
 export type InitialStateType = typeof initialState
 const initialState = {

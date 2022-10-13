@@ -1,5 +1,5 @@
 import React from "react";
-import Profile from "./Profile";
+import {Profile} from "./Profile";
 import {connect} from "react-redux";
 import {AppReduxStoreType} from "../../redux/store-redux";
 import {
@@ -12,7 +12,7 @@ import {
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {compose, Dispatch} from "redux";
-import {ProfileFormikType} from "./ProfileInfo/ProfileDataForm";
+import {ProfileFormikType} from "./ProfileInfo/ProfileData/ProfileDataForm";
 
 type PathParamType = {
     userId: string

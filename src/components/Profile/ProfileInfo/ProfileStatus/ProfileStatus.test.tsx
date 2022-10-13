@@ -1,7 +1,5 @@
 import {create} from "react-test-renderer";
 import {ProfileStatus} from "./ProfileStatus";
-import {updateStatus} from "../../../redux/profile-reducer";
-import {Dispatch} from "redux";
 
 describe("ProfileStatus Component", () => {
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ProfileFormikType} from "../components/Profile/ProfileInfo/ProfileDataForm";
+import {ProfileFormikType} from "../components/Profile/ProfileInfo/ProfileData/ProfileDataForm";
 
 const instance = axios.create({
     withCredentials: true,
