@@ -3,7 +3,10 @@
 
 }
 
-
+button:hover {
+    background-position: right center;
+    transform: scale(1.02);
+}
 .item {
     color: blue;
 }
@@ -13,4 +16,15 @@
 .error {
     outline: none;
     border: 2px solid red;
+}
+textarea {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 2px 5px;
+    border-radius: 7px;
+    background-image: linear-gradient(to right, #fbf6ff 0%, #d4a6ea 51%, #e9ccf5 100%);
+    font-size: 14px;
+    box-shadow: 0 16px 32px 2px rgba(0, 40, 120, .35);
+    transition: .5s;
 }

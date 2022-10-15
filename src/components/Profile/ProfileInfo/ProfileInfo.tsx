@@ -29,36 +29,37 @@ export const ProfileInfo = (props: ProfilePropsType) => {
         setEditMode(false)
     }
     return (
-        <div>
-            <div className={s.descriptionBlock}>
-                <div>
-                    <img src={props.profile.photos?.large || userPhoto}
-                         className={s.mainPhoto} alt='avatar'/>
-                    {props.isOwner &&
-                        <div>
-                            <button onClick={selectFileHandler}>upload file</button>
-                            <input
-                                style={{display: "none"}}
-                                ref={inputRef}
-                                type="file"
-                                onChange={onMainPhotoSelected}
-                            />
-                        </div>
-                    }
-                    <ProfileStatus
-                        status={props.status}
-                        updateStatus={props.updateStatus}
-                    />
-                </div>
-                <div className={s.profileInfo}>
-                    {editMode
+        <div className={s.descriptionBlock}>
+            <div className={s.profile}>
+                <img src={props.profile.photos?.large || userPhoto}
+                     className={s.mainPhoto} alt="avatar"/>
+                {
+                    props.isOwner &&
+                    <div>
+                        <button onClick={selectFileHandler}>upload file</button>
+                        <input
+                            style={{display: "none"}}
+                            ref={inputRef}
+                            type="file"
+                            onChange={onMainPhotoSelected}
+                        />
+                    </div>
+                }
+                <ProfileStatus
+                    status={props.status}
+                    updateStatus={props.updateStatus}
+                />
+            </div>
+            <div className={s.profileInfo}>
+                {
+                    editMode
                         ? <ProfileDataForm profile={props.profile} onSubmit={onSubmit}/>
                         : <ProfileData isOwner={props.isOwner} profile={props.profile}
                                        goToEditMode={() => {
                                            setEditMode(true)
                                        }}
-                                       errorMessage={props.errorMessage}/>}
-                </div>
+                                       errorMessage={props.errorMessage}/>
+                }
             </div>
         </div>)
 }
@@ -70,7 +71,7 @@ type ContactPropsType = {
 }
 export const Contact = ({contactTitle, contactValue}: ContactPropsType) => {
     return <div className={s.contacts}>
-        <b>{contactTitle}</b>: {contactValue}
+        <li><b>{contactTitle}</b>: {contactValue}</li>
     </div>
 }
 
@@ -82,19 +83,17 @@ type ProfileDataType = {
 }
 const ProfileData = ({profile, isOwner, goToEditMode, errorMessage}: ProfileDataType) => {
     return <div>
-        {isOwner && <div>
-            <button onClick={goToEditMode}>edit</button>
-            {errorMessage && <div className={s.error}>{errorMessage}</div>}
-        </div>}
         <div>
             <b>Full name</b>: {profile.fullName}
         </div>
         <div>
             <b>Looking for a job</b>: {profile.lookingForAJob ? "yes" : "no"}
         </div>
-        {profile.lookingForAJob && <div>
-            <b>My professional skills</b>: {profile.lookingForAJobDescription}
-        </div>}
+        {
+            profile.lookingForAJob && <div>
+                <b>My professional skills</b>: {profile.lookingForAJobDescription}
+            </div>
+        }
         <div>
             <b>About me</b>: {profile.aboutMe}
         </div>
@@ -104,6 +103,12 @@ const ProfileData = ({profile, isOwner, goToEditMode, errorMessage}: ProfileData
                             contactValue={profile.contacts && profile.contacts[key]}/>
         })}
         </div>
+        {
+            isOwner && <div>
+                <button onClick={goToEditMode}>edit</button>
+                {errorMessage && <div className={s.error}>{errorMessage}</div>}
+            </div>
+        }
     </div>
 }
 

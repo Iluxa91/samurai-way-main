@@ -1,10 +1,38 @@
 .descriptionBlock {
     padding: 10px;
     display: flex;
+
+}
+.profile {
+    background-color: #e0d3e5;
+    min-width: 250px;
+    padding: 20px;
+    box-shadow: inset 10px 15px 20px 0px rgb(0 20 120 / 15%);
+    border-radius: 30px;
+}
+.descriptionBlock button {
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    color: white;
+    margin: 5px;
+    border-radius: 10px;
+    letter-spacing: 1px;
+    background-image: linear-gradient(to right, #a988ac 0%, #e295f6 51%, #8d4893 100%);
+    background-size: 200% auto;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .1);
+    transition: .5s;
+}
+.descriptionBlock button:hover {
+    background-position: right center;
+    transform: scale(1.02);
 }
 .mainPhoto {
-    max-width: 200px;
-    border-radius: 15px;
+    margin-top: 3px;
+    height: 125px;
+    width: 125px;
+    border: 2px ridge #4288ae;
+    border-radius: 15%;
 }
 .contacts {
     margin-left: 10px;
@@ -13,5 +41,10 @@
     color: red;
 }
 .profileInfo {
-    margin-left: 50px;
+    background-color: #e0d3e5;
+    padding: 20px;
+    box-shadow: inset 6px -3px 20px 0px rgb(0 20 120 / 20%);
+    border-radius: 30px;
+    margin-left: 5px;
+    width: 100%
 }

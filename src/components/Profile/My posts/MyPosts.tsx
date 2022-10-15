@@ -9,7 +9,9 @@ export const MyPosts = React.memo((props: MyPostPropsType) => {
     let postsElement = props.posts.map(el => <Post key={el.id} likesCount={el.likesCount} message={el.message}/>)
 
     return <div className={s.postsBlock}>
+        <hr/>
         <h3>My Posts</h3>
+        <hr/>
         <NewPostFormik addPost={props.addPost}/>
         <div className={s.posts}>New posts</div>
         {postsElement}
@@ -35,7 +37,6 @@ export const NewPostFormik = (props: NewPostFormikPropsType) => {
             return errors
         },
         onSubmit: values => {
-            debugger
             props.addPost(values.newPostText)
 
         },
