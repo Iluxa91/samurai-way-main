@@ -1,24 +1,9 @@
-import React, {useEffect, useRef, useState} from "react";
-import styles from './Music.module.css'
-
+import React from "react";
+import styles from "./Music.module.css"
+import {usePlayMusic} from "./usePlayMusic";
 
 export function Music() {
-    const [playing, setPlaying] = useState(false);
-    let url = "http://streaming.tdiradio.com:8000/house.mp3";
-    const audioRef = useRef(new Audio(url));
-
-    useEffect(() => {
-        const handler = () => setPlaying(false);
-        let audioRefCurrent = audioRef.current
-        audioRefCurrent.addEventListener("ended", handler);
-        return () =>
-            audioRefCurrent.removeEventListener("ended", handler)
-            ;
-    }, []);
-
-    useEffect(() => {
-        audioRef.current[playing ? "play" : "pause"]();
-    }, [playing]);
+    const [playing, setPlaying] = usePlayMusic()
 
     return (
         <div className={styles.pleer}>
